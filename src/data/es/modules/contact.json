@@ -1,0 +1,98 @@
+{
+    "contact": {
+        "title": "Contáctanos",
+        "subtitle": "¿Listo para transformar tu negocio?",
+        "description": "Estamos aquí para ayudarte. Contáctanos y descubre cómo podemos potenciar tu empresa con soluciones tecnológicas a medida.",
+        "form": {
+            "name": {
+                "label": "Nombre completo",
+                "placeholder": "Ingresa tu nombre"
+            },
+            "email": {
+                "label": "Correo electrónico",
+                "placeholder": "ejemplo@correo.com"
+            },
+            "phone": {
+                "label": "Teléfono",
+                "placeholder": "+51 999 999 999"
+            },
+            "company": {
+                "label": "Empresa",
+                "placeholder": "Nombre de tu empresa"
+            },
+            "message": {
+                "label": "Mensaje",
+                "placeholder": "¿En qué podemos ayudarte?"
+            },
+            "button": {
+                "text": "Enviar mensaje"
+            }
+        },
+        "info": {
+            "title": "Información de contacto",
+            "items": [
+                {
+                    "icon": "location",
+                    "title": "Ubicación",
+                    "text": "Lima, Perú",
+                    "link": "#"
+                },
+                {
+                    "icon": "phone",
+                    "title": "Teléfono",
+                    "text": "+51 999 999 999",
+                    "link": "tel:+51999999999"
+                },
+                {
+                    "icon": "email",
+                    "title": "Email",
+                    "text": "contacto@arla.pe",
+                    "link": "mailto:contacto@arla.pe"
+                }
+            ]
+        },
+        "schedule": {
+            "title": "Horario de atención",
+            "days": [
+                {
+                    "name": "Lunes - Viernes",
+                    "hours": "9:00 AM - 6:00 PM"
+                },
+                {
+                    "name": "Sábado",
+                    "hours": "9:00 AM - 1:00 PM"
+                },
+                {
+                    "name": "Domingo",
+                    "hours": "Cerrado"
+                }
+            ],
+            "timezone": {
+                "label": "Zona horaria",
+                "value": "GMT-5 (Hora Perú)"
+            },
+            "note": "Fuera de horario déjanos un mensaje y te contactaremos lo antes posible."
+        },
+        "social": {
+            "title": "Síguenos en",
+            "networks": [
+                {
+                    "name": "LinkedIn",
+                    "icon": "linkedin",
+                    "url": "https://www.linkedin.com/company/arla-asociados"
+                },
+                {
+                    "name": "Facebook",
+                    "icon": "facebook",
+                    "url": "https://www.facebook.com/arlaasociados"
+                },
+                {
+                    "name": "Instagram",
+                    "icon": "instagram",
+                    "url": "https://www.instagram.com/arlaasociados"
+                }
+            ]
+        }
+        
+    }
+} 

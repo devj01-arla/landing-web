@@ -1,0 +1,216 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+interface FAQ {
+  question: string;
+  answer: string;
+  icon?: string;
+}
+
+interface FAQCategory {
+  name: string;
+  icon: string;
+  faqs: FAQ[];
+}
+
+const faqCategories: FAQCategory[] = [
+  {
+    name: "Servicios",
+    icon: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z",
+    faqs: [
+      {
+        question: "¿Qué servicios ofrece Arla & Asociados?",
+        answer: "Ofrecemos servicios de Data Engineering & BI, Cloud & On-Premise Consulting, Data Science & Machine Learning, Process Optimization, y Dashboards & Data Visualization. Nuestro enfoque es proporcionar soluciones tecnológicas innovadoras que ayuden a las empresas a tomar mejores decisiones basadas en datos."
+      },
+      {
+        question: "¿Con qué tecnologías trabajan?",
+        answer: "Trabajamos con las últimas tecnologías en el mercado, incluyendo AWS, Azure, Google Cloud, Python, R, TensorFlow, PyTorch, Power BI, Tableau, y herramientas especializadas en Big Data y Machine Learning. Nos mantenemos actualizados con las últimas tendencias tecnológicas para ofrecer las mejores soluciones a nuestros clientes."
+      }
+    ]
+  },
+  {
+    name: "Proceso",
+    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+    faqs: [
+      {
+        question: "¿Cómo puedo solicitar una propuesta de proyecto?",
+        answer: "Puede contactarnos a través de nuestro formulario de contacto en la página principal, enviarnos un mensaje por WhatsApp, o conectar con nosotros a través de nuestras redes sociales. Nuestro equipo responderá a su solicitud lo antes posible y agendará una reunión para discutir sus necesidades específicas."
+      },
+      {
+        question: "¿Qué metodología utilizan para sus proyectos?",
+        answer: "Utilizamos metodologías ágiles adaptadas a las necesidades de cada cliente, asegurando una comunicación constante y entregas incrementales que permiten ajustar el desarrollo según los requerimientos del proyecto."
+      }
+    ]
+  },
+  {
+    name: "Soporte y Alcance",
+    icon: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9",
+    faqs: [
+      {
+        question: "¿Ofrecen servicios de soporte continuo?",
+        answer: "Sí, proporcionamos soporte continuo después de la implementación para asegurar el óptimo funcionamiento de las soluciones implementadas y ayudar con cualquier ajuste o mejora necesaria. Nuestro equipo está disponible para resolver dudas y proporcionar mantenimiento preventivo y correctivo."
+      },
+      {
+        question: "¿Trabajan con empresas fuera del país?",
+        answer: "Sí, tenemos experiencia trabajando con empresas internacionales y contamos con la infraestructura necesaria para proporcionar servicios remotos de alta calidad. Utilizamos herramientas de colaboración en línea y nos adaptamos a diferentes zonas horarias para garantizar una comunicación efectiva."
+      }
+    ]
+  },
+  {
+    name: "Seguridad",
+    icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+    faqs: [
+      {
+        question: "¿Cómo manejan la confidencialidad de los datos?",
+        answer: "Implementamos estrictos protocolos de seguridad y confidencialidad. Todos nuestros procesos cumplen con estándares internacionales de protección de datos. Firmamos acuerdos de confidencialidad (NDAs) y utilizamos tecnologías de encriptación avanzada para proteger la información de nuestros clientes."
+      }
+    ]
+  }
+];
+---
+
+<section class="faq-section bg-gradient-to-br from-gray-50 to-white">
+  <div class="container mx-auto px-4 py-8">
+    <h2 class="text-4xl font-bold text-center mb-3 text-red-600">{title}</h2>
+    <p class="text-lg text-center text-gray-700 mb-8 max-w-2xl mx-auto">{description}</p>
+    
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
+      {faqCategories.map((category) => (
+        <div class="faq-category bg-white rounded-xl shadow-lg p-5 hover:shadow-xl transition-shadow duration-300">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-3 bg-blue-100 rounded-lg">
+              <svg
+                class="w-6 h-6 text-blue-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d={category.icon}
+                />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900">{category.name}</h3>
+          </div>
+          
+          <div class="space-y-4">
+            {category.faqs.map((faq, index) => (
+              <div class="faq-item" data-category={category.name} data-index={index}>
+                <button
+                  class="faq-question w-full text-left p-4 bg-gray-50 rounded-lg flex justify-between items-center hover:bg-gray-100 transition-colors duration-200"
+                  aria-expanded="false"
+                >
+                  <span class="text-base font-medium pr-8">{faq.question}</span>
+                  <svg
+                    class="w-5 h-5 transform transition-transform duration-200 text-gray-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="faq-answer overflow-hidden max-h-0 transition-all duration-300 ease-in-out"
+                  role="region"
+                >
+                  <div class="p-4">
+                    <p class="text-gray-700 leading-relaxed">{faq.answer}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .faq-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%);
+    pointer-events: none;
+  }
+
+  .faq-category {
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(209, 213, 219, 0.3);
+  }
+
+  .faq-question[aria-expanded='true'] {
+    background-color: #f3f4f6;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .faq-question[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+  }
+
+  .faq-question[aria-expanded='true'] + .faq-answer {
+    max-height: 1000px;
+  }
+
+  .faq-answer {
+    background-color: #f3f4f6;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+</style>
+<script>
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      const answer = button.nextElementSibling;
+      
+      // Cerrar todas las otras respuestas
+      document.querySelectorAll('.faq-answer').forEach(element => {
+        if (element !== answer) {
+          const elementHtml = element as HTMLElement;
+          elementHtml.style.maxHeight = '0';
+          const prevSibling = element.previousElementSibling as HTMLElement;
+          if (prevSibling) {
+            prevSibling.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+
+      // Alternar la respuesta actual
+      button.setAttribute('aria-expanded', !expanded ? 'true' : 'false');
+      if (answer) {
+        const answerElement = answer as HTMLElement;
+        if (!expanded) {
+          answerElement.style.maxHeight = answerElement.scrollHeight + 'px';
+        } else {
+          answerElement.style.maxHeight = '0';
+        }
+      }
+    });
+  });
+</script>

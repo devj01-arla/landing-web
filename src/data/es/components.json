@@ -1,0 +1,66 @@
+{
+    "navbar": {
+        "items": {
+            "styles": {
+                "base": "text-gray-700 hover:text-arla-blue font-medium transition-colors duration-200"
+            }
+        }
+    },
+    "hero": {
+        "slider": {
+            "buttons": {
+                "contactUs": {
+                    "text": "Contáctanos",
+                    "href": "#contact",
+                    "styles": {
+                        "base": "bg-arla-blue text-white px-6 py-2 md:px-8 md:py-3 rounded-lg font-semibold transition-all duration-300 relative overflow-hidden",
+                        "hover": "bg-gradient-to-r from-arla-blue via-blue-600 to-blue-500"
+                    }
+                },
+                "services": {
+                    "text": "Nuestros Servicios",
+                    "href": "#services",
+                    "styles": {
+                        "base": "bg-white/10 backdrop-blur-sm text-white border-2 border-white px-6 py-2 md:px-8 md:py-3 rounded-lg font-semibold transition-all duration-300 relative overflow-hidden hover:border-opacity-0 active:border-opacity-0",
+                        "hover": "bg-gradient-to-r from-blue-500 to-blue-700"
+                    }
+                },
+                "navigation": {
+                    "prev": {
+                        "styles": {
+                            "base": "absolute left-4 top-1/2 -translate-y-1/2 z-30 text-white p-2 hover:bg-white/10 rounded-full transition-colors duration-200 hidden md:block"
+                        }
+                    },
+                    "next": {
+                        "styles": {
+                            "base": "absolute right-4 top-1/2 -translate-y-1/2 z-30 text-white p-2 hover:bg-white/10 rounded-full transition-colors duration-200 hidden md:block"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "services": {
+        "buttons": {
+            "moreInfo": {
+                "text": "Saber más",
+                "href": "#contact",
+                "styles": {
+                    "base": "inline-block mt-6 text-arla-blue hover:text-arla-blue/80 font-semibold transition-colors duration-200"
+                }
+            }
+        }
+    },
+    "contact": {
+        "form": {
+            "submitButton": {
+                "text": "Enviar",
+                "loadingText": "Enviando...",
+                "styles": {
+                    "base": "w-full bg-arla-blue text-white px-6 py-2 md:px-8 md:py-3 rounded-lg font-semibold transition-all duration-300",
+                    "disabled": "cursor-not-allowed opacity-80"
+                }
+            }
+        }
+    }
+}

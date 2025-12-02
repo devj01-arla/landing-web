@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Cuenta verificada | Arla & Asociados">
+  <Navbar />
+  <main class="relative h-screen pt-20 overflow-hidden">
+    <!-- Fondo -->
+    <div class="fixed inset-0 z-0">
+      <img 
+        src="/fondo.png" 
+        alt="Fondo decorativo" 
+        class="w-full h-full object-cover"
+      />
+    </div>
+
+    <div class="relative flex items-center justify-center h-[calc(100vh-5rem)] px-4 sm:px-6 lg:px-8 py-12 z-20">
+      <div class="w-full max-w-md">
+        <div class="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8 relative z-20 text-center">
+          <h1 class="text-2xl font-bold text-gray-900 font-poppins mb-3">
+            ¡Tu cuenta ha sido verificada!
+          </h1>
+          <p class="text-sm text-gray-600 font-inter mb-6">
+            Ya puedes usar el panel de Arla &amp; Asociados.
+          </p>
+
+          <div class="space-y-3">
+            <a
+              href="/panel"
+              class="w-full inline-flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white bg-arla-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-arla-blue transition-all duration-300 font-poppins"
+            >
+              Ir a mi panel
+            </a>
+
+            <a
+              href="/login"
+              class="w-full inline-flex justify-center items-center py-2.5 px-4 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-all duration-200 font-inter"
+            >
+              Volver al inicio de sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,63 @@
+{
+    "ourServices":{
+        "title": "Nuestros servicios",
+        "description": "Combinamos experiencia técnica y estrategia empresarial para ofrecer soluciones innovadoras en consultoría tecnológica y desarrollo de software. Desde la optimización de infraestructuras hasta la transformación digital, acompañamos a las empresas en su camino hacia la eficiencia operativa y el crecimiento sostenible."
+    },
+    "services": [
+        {
+            "title": "CLOUD & ON-PREMISE CONSULTING",
+            "description": "La mayoría de las empresas están migrando hacia soluciones en la nube para mantenerse competitivas, y la consultoría ayuda a planificar e implementar esta transición de manera eficiente.",
+            "icon": "/icon-nube.svg",
+            "features": [
+                "Escalabilidad de recursos",
+                "Acceso a tecnologías avanzadas",
+                "Seguridad y cumplimiento",
+                "Optimización de costos"
+            ]
+        },
+        {
+            "title": "DATA ENGINEERING & BUSINESS INTELLIGENCE",
+            "description": "En un entorno competitivo, las empresas necesitan datos precisos y relevantes para tomar decisiones estratégicas y operativas.",
+            "icon": "/icon-Bi.svg",
+            "features": [
+                "Procesamiento de datos valiosos",
+                "Detección de patrones en tiempo real",
+                "Reportes automatizados",
+                "Integración de plataformas"
+            ]
+        },
+        {
+            "title": "DATA SCIENCE & MACHINE LEARNING",
+            "description": "El Machine Learning permite desarrollar modelos predictivos y automatizar decisiones complejas basadas en datos históricos y en tiempo real. Con ML, las empresas pueden ofrecer productos y servicios personalizados, mejorando la experiencia del cliente y aumentando su fidelidad.",
+            "icon": "/icon-datos.svg",
+            "features": [
+                "Anticipar comportamientos del mercado",
+                "Identificación de fraudes",
+                "Reducción de costos",
+                "Decisiones basadas en evidencia"
+            ]
+        },
+        {
+            "title": "PROCESS OPTIMIZATION",
+            "description": "La automatización elimina tareas repetitivas y manuales, reduciendo tiempos y errores humanos. Al optimizar procesos, se utilizan menos recursos y se minimizan costos operativos a largo plazo.",
+            "icon": "/icon-automatizacion.svg",
+            "features": [
+            "Manejo de volúmenes crecientes de trabajo",
+            "Respuesta rápida a demandas del cliente",
+            "Consistencia en procesos críticos",
+            "Revelación de cuellos de botella"
+            ]
+        },
+        {
+            "title": "DASHBOARDS & DATA VISUALIZATION",
+            "description": "Los dashboards permiten que los tomadores de decisiones tengan a su disposición métricas e indicadores relevantes en tiempo real.",
+            "icon": "/icon-visualizacion.svg",
+            "features": [
+            "Consolidación de datos clave en una sola plataforma",
+            "Destacar tendencias, patrones y anomalías",
+            "Interpretación visual y sencilla de información compleja",
+            "Decisiones más informadas y oportunas"
+            ]
+        }
+    ]
+}

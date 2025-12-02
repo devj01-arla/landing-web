@@ -1,0 +1,51 @@
+---
+// Import the config object
+import { config } from "../utils/config.js";
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Hero from "../components/Hero.astro";
+import Experience from "../components/Experience.astro";
+import Services from "../components/Services.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+import ChatWidget from "../chatbot/components/ChatWidget.astro";
+import LogoAnimation from "../components/LogoAnimation.astro";
+
+// Importar los componentes de servicio
+import DATA_E from "../Footer/services/components/DATA_E.astro";
+import CLOUD from "../Footer/services/components/CLOUD.astro";
+import SCIENCE from "../Footer/services/components/SCIENCE.astro";
+import PROCESS from "../Footer/services/components/PROCESS.astro";
+import DASHBOARDS from "../Footer/services/components/DASHBOARDS.astro";
+
+// Configuración de rutas dinámicas
+export async function getStaticPaths() {
+  return [];
+}
+
+const { service } = Astro.params;
+
+// Mapeo de componentes
+const serviceComponents = {
+  'DATA_E': DATA_E,
+  'CLOUD': CLOUD,
+  'SCIENCE': SCIENCE,
+  'PROCESS': PROCESS,
+  'DASHBOARDS': DASHBOARDS
+} as const;
+
+const ServiceComponent = service && service in serviceComponents ? serviceComponents[service as keyof typeof serviceComponents] : null;
+---
+
+<Layout title="ARLA - Data Analysis & Software Development">
+  <LogoAnimation />
+  <Navbar />
+  <main>
+    <Hero config={config.components.hero} />
+    <Experience />
+    <Services />
+    <Contact />
+  </main>
+  <Footer />
+  <ChatWidget />
+</Layout>

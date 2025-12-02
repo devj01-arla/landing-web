@@ -1,0 +1,31 @@
+{
+    "title": "Data Science & Machine Learning",
+    "hero": {
+        "title": "Inteligencia Artificial para tu Negocio",
+        "subtitle": "Soluciones Avanzadas de Data Science y Machine Learning",
+        "description": "Desarrollamos modelos predictivos y soluciones de IA que transforman datos en valor",
+        "image": "/DATA SCIENCE & MACHINE LEARNING.jpeg"
+    },
+    "sections": [
+        {
+            "title": "Nuestras Capacidades",
+            "items": [
+                {
+                    "title": "Modelos Predictivos",
+                    "description": "Anticipamos tendencias y comportamientos para tu negocio",
+                    "image": "/Modelos Predictivos.jpeg"
+                },
+                {
+                    "title": "Machine Learning",
+                    "description": "Algoritmos que aprenden y mejoran con el tiempo",
+                    "image": "/Machine Learning.jpg"
+                },
+                {
+                    "title": "Deep Learning",
+                    "description": "Redes neuronales para problemas complejos",
+                    "image": "/Deep Learning.jpg"
+                }
+            ]
+        }
+    ]
+}

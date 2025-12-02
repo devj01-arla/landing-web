@@ -1,0 +1,97 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from "../../../components/Navbar.astro";
+import Footer from "../../../components/Footer.astro";
+import data from '../modules/CLOUD.json';
+
+const frontmatter = data;
+---
+
+<Layout title={`ARLA - ${frontmatter.title}`}>
+    <Navbar />
+    <main>
+        <!-- Hero Section -->
+        <section class="relative h-[70vh] overflow-hidden">
+            <div class="absolute inset-0 bg-black/50 z-10"></div>
+            <img
+                src={frontmatter.hero.image}
+                alt={frontmatter.title}
+                class="absolute w-full h-full object-cover"
+            />
+            <div class="relative z-20 h-full flex items-center">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 font-poppins">
+                        {frontmatter.hero.title}
+                    </h1>
+                    <p class="text-xl md:text-2xl text-white/90 mb-4 font-inter max-w-2xl">
+                        {frontmatter.hero.subtitle}
+                    </p>
+                    <p class="text-lg text-white/80 font-inter max-w-2xl">
+                        {frontmatter.hero.description}
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Sections -->
+        {frontmatter.sections.map((section) => (
+            <section class="py-16 bg-white">
+                <div class="container mx-auto px-4 max-w-5xl">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center font-poppins">
+                        {section.title}
+                    </h2>
+                    <div class="flex flex-col space-y-8">
+                        {section.items.map((item) => (
+                            <div class="bg-white p-10 rounded-xl border-2 border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                                <h3 class="text-2xl font-semibold text-gray-900 mb-6 font-poppins">
+                                    {item.title}
+                                </h3>
+                                <p class="text-gray-600 font-inter mb-8 text-lg leading-relaxed">{item.description}</p>
+                                <div class="flex flex-col lg:flex-row items-center gap-8">
+                                    <img
+                                        src={item.image}
+                                        alt={item.title}
+                                        class="w-full lg:w-2/3 h-64 object-cover rounded-xl shadow-lg"
+                                    />
+                                    <a
+                                        href="/IN_PROGRESS"
+                                        target="_self"
+                                        class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition-all duration-300 w-full lg:w-auto"
+                                    >
+                                        Saber más
+                                    </a>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        ))}
+
+        <!-- CTA Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 font-poppins">
+                    ¿Listo para empezar?
+                </h2>
+                <p class="text-xl text-gray-600 mb-8 font-inter">
+                    Contáctanos para discutir cómo podemos ayudarte
+                </p>
+                <a
+                    href="/"
+                    class="inline-block bg-arla-blue text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300"
+                    onclick="console.log('CLOUD: Botón Contactar Ahora presionado'); window.location.href='/#contact'; return false;"
+                >
+                    Contactar Ahora
+                </a>
+            </div>
+        </section>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    section {
+        scroll-margin-top: 4rem;
+    }
+</style>

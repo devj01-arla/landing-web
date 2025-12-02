@@ -1,0 +1,31 @@
+{
+    "title": "Process Optimization",
+    "hero": {
+        "title": "Optimización de Procesos Empresariales",
+        "subtitle": "Eficiencia y Automatización para tu Empresa",
+        "description": "Mejoramos y automatizamos procesos para aumentar la productividad y reducir costos",
+        "image": "/PROCESS OPTIMIZATION.png"
+    },
+    "sections": [
+        {
+            "title": "Nuestros Servicios",
+            "items": [
+                {
+                    "title": "Análisis de Procesos",
+                    "description": "Identificamos áreas de mejora y oportunidades de optimización",
+                    "image": "/Análisis de Procesos.jpg"
+                },
+                {
+                    "title": "Automatización RPA",
+                    "description": "Robots de software para tareas repetitivas",
+                    "image": "/Automatización RPA.jpg"
+                },
+                {
+                    "title": "Reingeniería de Procesos",
+                    "description": "Rediseño completo para máxima eficiencia",
+                    "image": "/Reingeniería de Procesos.jpg"
+                }
+            ]
+        }
+    ]
+}

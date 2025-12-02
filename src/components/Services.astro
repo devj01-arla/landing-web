@@ -1,0 +1,127 @@
+---
+import { services, ourServices } from '../data/es/modules/services.json';
+
+// Mapeo de títulos de servicios a sus rutas correspondientes
+const serviceRoutes: Record<string, string> = {
+  'CLOUD & ON-PREMISE CONSULTING': '/Footer/services/CLOUD',
+  'DATA ENGINEERING & BUSINESS INTELLIGENCE': '/Footer/services/DATA_E',
+  'DATA SCIENCE & MACHINE LEARNING': '/Footer/services/SCIENCE',
+  'PROCESS OPTIMIZATION': '/Footer/services/PROCESS',
+  'DASHBOARDS & DATA VISUALIZATION': '/Footer/services/DASHBOARDS'
+};
+
+// Función helper para obtener la ruta del servicio
+function getServiceRoute(serviceTitle: string): string {
+  return serviceRoutes[serviceTitle] || '#contact';
+}
+---
+
+<style>
+  .service-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .service-slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .service-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .service-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .pagination-dot {
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .pagination-dot.active {
+    background-color: #1f17d9;
+  }
+</style>
+
+<section id="services" class="py-20 bg-white w-full overflow-x-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl font-bold text-gray-900 font-poppins">{ourServices.title}</h2>
+      <p class="mt-4 text-xl text-gray-600 font-inter">{ourServices.description}</p>
+    </div>
+    <div class="service-slider">
+      <div class="service-slides">
+        {services.map((service, index) => (
+          <div class="service-slide reveal delay-{index * 200} bg-arla-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group">
+            <div class="text-4xl mb-4 transform">
+              <img
+                src={service.icon}
+                alt={service.title}
+                class="w-16 h-16 object-contain"
+              />
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-4 font-poppins">{service.title}</h3>
+            <p class="text-gray-600 mb-6 font-inter">{service.description}</p>
+            <ul class="space-y-2">
+              {service.features.map(feature => (
+                <li class="flex items-center text-gray-600 font-inter">
+                  <svg class="h-5 w-5 text-arla-blue mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <a 
+               href={getServiceRoute(service.title)} 
+               class="inline-block mt-6 text-arla-blue hover:text-arla-blue/80 font-semibold transition-colors duration-200">
+              Saber más →
+            </a>
+          </div>
+        ))}
+      </div>
+      <div class="service-pagination">
+        {services.map((_, index) => (
+          <div class="pagination-dot" data-index={index}></div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let currentServiceIndex = 0;
+  const serviceSlides = document.querySelector('.service-slides') as HTMLElement;
+  const totalServiceSlides = document.querySelectorAll('.service-slide').length;
+  const paginationDots = document.querySelectorAll('.pagination-dot');
+
+  function updateServiceSlider() {
+    serviceSlides.style.transform = `translateX(-${currentServiceIndex * 100}%)`;
+    paginationDots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentServiceIndex);
+    });
+  }
+
+  paginationDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentServiceIndex = index;
+      updateServiceSlider();
+    });
+  });
+
+  setInterval(() => {
+    currentServiceIndex = (currentServiceIndex + 1) % totalServiceSlides;
+    updateServiceSlider();
+  }, 3000);
+</script>

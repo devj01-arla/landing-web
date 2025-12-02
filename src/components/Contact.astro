@@ -1,0 +1,336 @@
+---
+// Importaciones y configuración necesaria
+import { contact } from "../data/es/modules/contact.json";
+import components from "../data/es/components.json";
+import { siteConfig } from "../utils/siteConfig.js";
+
+const { submitButton } = components.contact.form;
+---
+
+<section id="contact" class="py-20 bg-gray-50 w-full overflow-x-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl font-bold text-gray-900 font-poppins">Contáctenos</h2>
+      <p class="mt-4 text-xl text-gray-600 font-inter">Póngase en contacto con nuestro equipo de expertos</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="reveal-left">
+        <div class="bg-white p-8 rounded-xl shadow-sm">
+          <form 
+            id="contactForm"
+            action={siteConfig.api.contact}
+            method="POST" 
+            class="space-y-6"
+            autocomplete="on"
+          >
+            <!-- CSRF Protection Token (hidden) -->
+            <input type="hidden" name="csrf_token" id="csrf_token" value="" />
+            <div class="form-group">
+              <label for="name" class="block text-sm font-medium text-gray-700 font-inter">Nombre</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-arla-blue focus:ring focus:ring-arla-blue/20 transition-colors duration-200"
+                required
+              />
+              <div class="error-message hidden"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="block text-sm font-medium text-gray-700 font-inter">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-arla-blue focus:ring focus:ring-arla-blue/20 transition-colors duration-200"
+                required
+              />
+              <div class="error-message hidden"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="message" class="block text-sm font-medium text-gray-700 font-inter">Mensaje</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-arla-blue focus:ring focus:ring-arla-blue/20 transition-colors duration-200"
+                required
+              ></textarea>
+              <div class="error-message hidden"></div>
+            </div>
+
+            <button
+              type="submit"
+              id="submitButton"
+              class={`${submitButton.styles.base} hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-700`}
+              disabled={false}
+            >
+              <span id="button-text">{submitButton.text}</span>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="space-y-8 reveal-right">
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4 font-poppins">Nuestra oficina</h3>
+          <div class="space-y-4 font-inter">
+            <div class="flex items-start">
+              <svg class="h-6 w-6 text-arla-blue mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold text-gray-900">Dirección</h4>
+                <p class="mt-2 text-gray-600">Av. Luis Galvez Chipoco 115<br/>Chincha Alta - Ica </p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <svg class="h-6 w-6 text-arla-blue mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold text-gray-900">Email</h4>
+                <p class="mt-2 text-gray-600">info@arla-asociados.com</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <svg class="h-6 w-6 text-arla-blue mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold text-gray-900">Teléfono</h4>
+                <p class="mt-2 text-gray-600">+51 912 235 161</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-arla-blue text-white p-8 rounded-xl">
+          <h3 class="text-2xl font-bold mb-4 font-poppins">Horario de atención</h3>
+          <div class="space-y-2 font-inter">
+            <p>Lunes - Viernes: 9:00 AM - 6:00 PM</p>
+            <p>Sabado: 10:00 AM - 4:00 PM</p>
+            <p>Domingo: Cerrado</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Notificaciones -->
+<div id="notifications" class="fixed top-4 right-4 z-50">
+  <div id="successNotification" class="bg-white shadow-lg rounded-lg p-4 mb-4 hidden">
+    <div class="flex items-center gap-2">
+      <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+      </svg>
+      <p class="text-gray-700">Mensaje enviado correctamente</p>
+    </div>
+  </div>
+
+  <div id="errorNotification" class="bg-white shadow-lg rounded-lg p-4 hidden">
+    <div class="flex items-center gap-2">
+      <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+      <p class="text-gray-700">Error al enviar el mensaje</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  @media (max-width: 768px) {
+    a {
+      bottom: 1rem;
+      right: 1rem;
+    }
+    
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .loading-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(to right, #ffffff80, #ffffff);
+    transition: width 1s ease;
+  }
+
+  .loading .loading-bar {
+    width: 100%;
+  }
+
+  button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+
+  .form-group {
+    position: relative;
+  }
+
+  .error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
+  .error-label {
+    color: #dc2626 !important;
+  }
+
+  .error-input {
+    border-color: #dc2626 !important;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const submitButton = document.getElementById('submitButton');
+    const buttonText = document.getElementById('button-text');
+    
+    // Rate limiting: máximo 3 envíos por minuto
+    let lastSubmission = 0;
+    const RATE_LIMIT_MS = 60000; // 1 minuto
+    const MAX_SUBMISSIONS = 3;
+    let submissionCount = 0;
+    
+    // Generar token CSRF simple
+    const csrfToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    document.getElementById('csrf_token').value = csrfToken;
+
+    function showError(field, message) {
+      const formGroup = field.closest('.form-group');
+      const label = formGroup.querySelector('label');
+      const errorDiv = formGroup.querySelector('.error-message');
+      
+      field.classList.add('error-input');
+      label.classList.add('error-label');
+      errorDiv.textContent = message;
+      errorDiv.classList.remove('hidden');
+    }
+
+    function clearError(field) {
+      const formGroup = field.closest('.form-group');
+      const label = formGroup.querySelector('label');
+      const errorDiv = formGroup.querySelector('.error-message');
+      
+      field.classList.remove('error-input');
+      label.classList.remove('error-label');
+      errorDiv.classList.add('hidden');
+    }
+
+    function showNotification(type, duration = 3000) {
+      const notification = document.getElementById(`${type}Notification`);
+      notification.classList.remove('hidden');
+      setTimeout(() => {
+        notification.classList.add('hidden');
+      }, duration);
+    }
+
+    // Validación en tiempo real
+    ['name', 'email', 'message'].forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      field.addEventListener('blur', () => {
+        if (!field.value.trim()) {
+          showError(field, 'Espacio obligatorio');
+        }
+      });
+
+      field.addEventListener('input', () => {
+        if (field.value.trim()) {
+          clearError(field);
+        }
+      });
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      let hasErrors = false;
+
+      // Rate limiting check
+      const now = Date.now();
+      if (now - lastSubmission < RATE_LIMIT_MS && submissionCount >= MAX_SUBMISSIONS) {
+        showError(submitButton, 'Demasiados envíos. Espera un momento antes de intentar nuevamente.');
+        return;
+      }
+
+      // Validar campos
+      ['name', 'email', 'message'].forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (!field.value.trim()) {
+          showError(field, 'Espacio obligatorio');
+          hasErrors = true;
+        }
+      });
+
+      // Validación adicional de email
+      const emailField = document.getElementById('email');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailField.value && !emailRegex.test(emailField.value)) {
+        showError(emailField, 'Formato de email inválido');
+        hasErrors = true;
+      }
+
+      // Validación de longitud
+      const messageField = document.getElementById('message');
+      if (messageField.value.length > 1000) {
+        showError(messageField, 'El mensaje no puede exceder 1000 caracteres');
+        hasErrors = true;
+      }
+
+      if (hasErrors) return;
+
+      // Deshabilitar botón y mostrar estado de carga
+      submitButton.disabled = true;
+      submitButton.classList.add('cursor-not-allowed', 'opacity-80');
+      buttonText.textContent = 'Enviando...';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showNotification('success');
+          form.reset();
+          // Actualizar rate limiting
+          lastSubmission = Date.now();
+          submissionCount++;
+        } else {
+          throw new Error(data.error || 'Error al enviar el mensaje');
+        }
+      } catch (error) {
+        // Error handling without console output for production
+        showNotification('error');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.classList.remove('cursor-not-allowed', 'opacity-80');
+        buttonText.textContent = 'Enviar';
+      }
+    });
+  });
+</script>

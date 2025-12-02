@@ -1,0 +1,130 @@
+---
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import WhatsApp from '../components/WhatsApp.astro';
+import { siteConfig } from '../utils/siteConfig.js';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="overflow-x-hidden">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="ARLA - Data Analysis and Software Development" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <!-- X-Frame-Options debe configurarse en headers HTTP del servidor, no en meta tags -->
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content={Object.entries(siteConfig.security.csp).map(([key, value]) => `${key} ${value}`).join('; ')} />
+    
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-arla-white overflow-x-hidden min-w-[320px]">
+    <slot />
+    <WhatsApp />
+  </body>
+</html>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    position: relative;
+    width: 100%;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  .reveal-left.active,
+  .reveal-right.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (max-width: 768px) {
+    .reveal,
+    .reveal-left,
+    .reveal-right {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  .delay-200 {
+    transition-delay: 200ms;
+  }
+
+  .delay-400 {
+    transition-delay: 400ms;
+  }
+
+  .delay-600 {
+    transition-delay: 600ms;
+  }
+</style>
+
+<script>
+  function initScrollReveal() {
+    const options = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, options);
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((element) => {
+      observer.observe(element);
+    });
+  }
+
+  // Initialize animations
+  initScrollReveal();
+</script>

@@ -1,0 +1,255 @@
+---
+import { itemsNav, logo } from "../data/es/modules/navbar.json";
+import SubButton from './SubButton.astro';
+---
+
+<nav id="navbar" class="fixed w-full z-50 transition-all duration-500">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+      <div
+        id="logo-container"
+        class="flex-shrink-0 flex items-center transition-all duration-500 opacity-0 pointer-events-none"
+      >
+        <a href={logo.href} class="flex items-center group">
+          <img src={logo.img} alt={logo.alt} class="h-8 w-auto mr-3 transition-transform duration-300 group-hover:scale-110" />
+          <span class="text-xl font-bold font-poppins bg-gradient-to-r from-arla-blue to-blue-600 bg-clip-text text-transparent">
+            {logo.title}
+          </span>
+        </a>
+      </div>
+      <!-- Enlaces de navegación (visibles en PC) -->
+      <div id="nav-items" class="hidden md:block opacity-0 pointer-events-none">
+        <div class="ml-10 flex items-center space-x-8">
+          {
+            itemsNav.map((item) => 
+              item.name === "Servicios" ? (
+                <SubButton />
+              ) : (
+                <a
+                  href={item.href}
+                  class="relative text-gray-700 hover:text-arla-blue font-semibold transition-all duration-300 group py-2"
+                >
+                  {item.name}
+                  <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-arla-blue transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              )
+            )
+          }
+        </div>
+      </div>
+      <!-- Botón hamburguesa (solo móvil) -->
+      <div class="md:hidden hidden" id="menu-button-container">
+        <button id="menu-toggle" class="flex flex-col justify-center items-center w-10 h-10 bg-transparent border-none focus:outline-none group">
+          <div class="line w-6 h-0.5 bg-gray-700 mb-1.5 transition-all duration-300 group-hover:bg-arla-blue"></div>
+          <div class="line w-6 h-0.5 bg-gray-700 mb-1.5 transition-all duration-300 group-hover:bg-arla-blue"></div>
+          <div class="line w-6 h-0.5 bg-gray-700 transition-all duration-300 group-hover:bg-arla-blue"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Menú móvil mejorado -->
+  <div id="mobile-menu" class="md:hidden hidden bg-white/95 shadow-xl border-t border-gray-100">
+    <div class="px-6 py-4">
+      {
+        itemsNav.map((item) => 
+          <a
+            href={item.href}
+            class="block py-3 text-gray-700 hover:text-arla-blue font-semibold transition-all duration-300 border-b border-gray-100 last:border-b-0 hover:pl-2"
+          >
+            {item.name}
+          </a>
+        )
+      }
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const navbar = document.getElementById("navbar");
+    const navItems = document.getElementById("nav-items");
+    const logoContainer = document.getElementById("logo-container");
+    const menuButtonContainer = document.getElementById("menu-button-container");
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    // Función para manejar el menú móvil
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        const lines = menuToggle.querySelectorAll('.line');
+        
+        lines.forEach((line, index) => {
+          if (index === 0) {
+            line.classList.toggle("rotate-45");
+            line.classList.toggle("translate-y-2");
+          } else if (index === 1) {
+            line.classList.toggle("opacity-0");
+          } else {
+            line.classList.toggle("-rotate-45");
+            line.classList.toggle("-translate-y-2");
+          }
+        });
+      });
+    }
+
+    window.addEventListener("scroll", () => {
+      if (navItems && logoContainer && menuButtonContainer) {
+        if (window.scrollY > 50) {
+          // Aplicamos el fondo blanco y la sombra para todas las versiones
+          if (navbar) {
+            navbar.classList.add("bg-white/95", "shadow-lg", "border-b", "border-gray-100");
+          }
+          
+          // En PC mostramos los enlaces
+          if (window.innerWidth >= 768) {
+            navItems.classList.remove("opacity-0", "pointer-events-none");
+            navItems.classList.add("opacity-100", "pointer-events-auto");
+          }
+          // Mostramos el logo y el botón hamburguesa (en móvil)
+          logoContainer.classList.remove("opacity-0", "pointer-events-none");
+          logoContainer.classList.add("opacity-100", "pointer-events-auto");
+          menuButtonContainer.classList.remove("hidden");
+        } else {
+          // Quitamos el fondo blanco y la sombra para todas las versiones
+          if (navbar) {
+            navbar.classList.remove("bg-white/95", "shadow-lg", "border-b", "border-gray-100");
+          }
+          
+          // En PC ocultamos los enlaces
+          if (window.innerWidth >= 768) {
+            navItems.classList.remove("opacity-100", "pointer-events-auto");
+            navItems.classList.add("opacity-0", "pointer-events-none");
+          }
+          // Ocultamos el logo y el menú móvil
+          logoContainer.classList.remove("opacity-100", "pointer-events-auto");
+          logoContainer.classList.add("opacity-0", "pointer-events-none");
+          menuButtonContainer.classList.add("hidden");
+          if (mobileMenu) {
+            mobileMenu.classList.add("hidden");
+          }
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  #nav-items {
+    transition: opacity 0.5s ease-in-out;
+  }
+  .opacity-0 {
+    opacity: 0;
+  }
+  .opacity-100 {
+    opacity: 1;
+  }
+  .pointer-events-none {
+    pointer-events: none;
+  }
+  .pointer-events-auto {
+    pointer-events: auto;
+  }
+  #center-logo.hidden {
+    display: none;
+  }
+  #logo-container.hidden {
+    display: none;
+  }
+  
+  /* Estilos para la animación del botón hamburguesa */
+  .line {
+    transform-origin: center;
+    transition: all 0.3s ease-in-out;
+  }
+  .rotate-45 {
+    transform: rotate(45deg);
+  }
+  .-rotate-45 {
+    transform: rotate(-45deg);
+  }
+  .translate-y-2 {
+    transform: translateY(8px);
+  }
+  .-translate-y-2 {
+    transform: translateY(-8px);
+  }
+
+  /* Estilos para el menú móvil */
+  #mobile-menu {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Estilos para el menú desplegable */
+  .group:hover .group-hover\:rotate-180 {
+    transform: rotate(180deg);
+  }
+
+  .group:hover .group-hover\:translate-y-0 {
+    transform: translateY(0);
+  }
+
+  .group:hover .group-hover\:opacity-100 {
+    opacity: 1;
+  }
+
+  .group:hover .group-hover\:visible {
+    visibility: visible;
+  }
+
+  /* Mejoras en el navbar */
+  #navbar {
+    /* Removed backdrop-filter to eliminate blur effect */
+  }
+
+  /* Efectos de glassmorphism - removed blur effects */
+  .backdrop-blur-md {
+    /* Removed backdrop-filter to eliminate blur effect */
+  }
+
+  /* Gradientes personalizados */
+  .bg-gradient-to-r {
+    background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  }
+
+  /* Mejoras en la tipografía */
+  .bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .text-transparent {
+    color: transparent;
+  }
+
+  /* Animaciones suaves */
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  /* Efectos de hover mejorados */
+  .group:hover .group-hover\:scale-110 {
+    transform: scale(1.1);
+  }
+
+  /* Responsive improvements */
+  @media (max-width: 768px) {
+    #navbar {
+      /* Removed backdrop-filter to eliminate blur effect */
+    }
+  }
+
+  /* Mejoras de accesibilidad */
+  @media (prefers-reduced-motion: reduce) {
+    .transition-all,
+    .line {
+      transition: none;
+    }
+    
+    .group:hover .group-hover\:scale-110 {
+      transform: none;
+    }
+  }
+</style>

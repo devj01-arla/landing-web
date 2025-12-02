@@ -1,0 +1,31 @@
+{
+    "title": "Cloud & On-Premise Solutions",
+    "hero": {
+        "title": "Soluciones en la Nube y en Sitio",
+        "subtitle": "Infraestructura Tecnológica Adaptada a tus Necesidades",
+        "description": "Implementamos y gestionamos soluciones tanto en la nube como en infraestructura local",
+        "image": "/CLOUD & ON-PREMISE CONSULTING.jpeg"
+    },
+    "sections": [
+        {
+            "title": "Nuestros Servicios",
+            "items": [
+                {
+                    "title": "Migración a la Nube",
+                    "description": "Transición segura y eficiente a plataformas cloud",
+                    "image": "/Migración a la Nube.jpg"
+                },
+                {
+                    "title": "Infraestructura Híbrida",
+                    "description": "Soluciones que combinan lo mejor de la nube y on-premise",
+                    "image": "/Infraestructura Híbrida.jpg"
+                },
+                {
+                    "title": "Optimización de Costos",
+                    "description": "Estrategias para maximizar el ROI de tu infraestructura",
+                    "image": "/Optimización de Costos.jpg"
+                }
+            ]
+        }
+    ]
+}

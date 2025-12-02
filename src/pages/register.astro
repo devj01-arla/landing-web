@@ -1,0 +1,730 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Registro | Arla & Asociados">
+  <Navbar />
+  <main class="relative h-screen pt-20 overflow-hidden">
+    <!-- Imagen de fondo -->
+    <div class="fixed inset-0 z-0">
+      <img 
+        src="/fondo.png" 
+        alt="Fondo decorativo" 
+        class="w-full h-full object-cover"
+      />
+    </div>
+
+    <div class="relative flex items-center justify-center h-[calc(100vh-5rem)] px-4 sm:px-6 lg:px-8 py-12 z-20">
+      <div class="w-full max-w-3xl">
+        <!-- Título -->
+        <div class="text-center mb-10 reveal">
+          <h1 class="text-4xl font-bold text-white font-poppins mb-3 drop-shadow-md">Crear Cuenta</h1>
+        </div>
+
+        <!-- Formulario de registro -->
+        <div class="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-10 reveal-left relative z-20">
+          <!-- Botón de regresar -->
+          <div class="mb-6">
+            <a
+              href="/login"
+              class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-arla-blue transition-colors duration-200 font-inter"
+            >
+              <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Regresar
+            </a>
+          </div>
+          <form id="registerForm" class="space-y-6" autocomplete="on">
+            <!-- Primera fila: Nombre de Empresa y Email -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Campo Nombre de Empresa -->
+              <div class="form-group">
+                <label for="companyName" class="block text-sm font-medium text-gray-700 font-inter mb-2">
+                  Nombre de Empresa
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    id="companyName"
+                    name="companyName"
+                    class="block w-full pl-10 pr-3 py-3.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-arla-blue focus:border-arla-blue transition-all duration-200 font-inter bg-white"
+                    placeholder="Ingrese el nombre de la empresa"
+                    required
+                    autocomplete="organization"
+                  />
+                </div>
+                <div class="error-message hidden mt-1"></div>
+              </div>
+
+              <!-- Campo Email -->
+              <div class="form-group">
+                <label for="email" class="block text-sm font-medium text-gray-700 font-inter mb-2">
+                  Correo
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="block w-full pl-10 pr-3 py-3.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-arla-blue focus:border-arla-blue transition-all duration-200 font-inter bg-white"
+                    placeholder="Ingrese su correo"
+                    required
+                    autocomplete="email"
+                  />
+                </div>
+                <div class="error-message hidden mt-1"></div>
+              </div>
+            </div>
+
+            <!-- Segunda fila: Contraseña y Verificar Contraseña -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Campo Contraseña -->
+              <div class="form-group">
+                <label for="password" class="block text-sm font-medium text-gray-700 font-inter mb-2">
+                  Contraseña
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="block w-full pl-10 pr-10 py-3.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-arla-blue focus:border-arla-blue transition-all duration-200 font-inter bg-white"
+                    placeholder="Ingrese su contraseña"
+                    required
+                    autocomplete="new-password"
+                  />
+                  <button
+                    type="button"
+                    id="togglePassword"
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors duración-200"
+                    aria-label="Mostrar/Ocultar contraseña"
+                  >
+                    <svg id="eyeIcon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <svg id="eyeOffIcon" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="error-message hidden mt-1"></div>
+              </div>
+
+              <!-- Campo Verificar Contraseña -->
+              <div class="form-group">
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-700 font-inter mb-2">
+                  Verificar Contraseña
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    class="block w-full pl-10 pr-10 py-3.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-arla-blue focus:border-arla-blue transition-all duration-200 font-inter bg-white"
+                    placeholder="Verifique su contraseña"
+                    required
+                    autocomplete="new-password"
+                  />
+                  <button
+                    type="button"
+                    id="toggleConfirmPassword"
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors duración-200"
+                    aria-label="Mostrar/Ocultar contraseña"
+                  >
+                    <svg id="eyeIconConfirm" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <svg id="eyeOffIconConfirm" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="error-message hidden mt-1"></div>
+              </div>
+            </div>
+
+            <!-- Términos y condiciones -->
+            <div class="flex items-start pt-2">
+              <div class="flex items-center h-5">
+                <input
+                  id="terms"
+                  name="terms"
+                  type="checkbox"
+                  class="h-4 w-4 text-arla-blue focus:ring-arla-blue border-gray-300 rounded transition-colors duration-200 cursor-pointer"
+                  required
+                />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="terms" class="text-gray-700 font-inter cursor-pointer">
+                  Acepto los <a href="/terminos-condiciones" class="text-arla-blue hover:text-blue-700 underline">términos y condiciones</a> y la <a href="/terminos-condiciones#politica-privacidad" class="text-arla-blue hover:text-blue-700 underline">política de privacidad</a>
+                </label>
+              </div>
+            </div>
+
+            <!-- Botón de envío -->
+            <button
+              type="submit"
+              id="submitButton"
+              class="w-full flex justify-center items-center py-3.5 px-4 border border-transparent rounded-lg shadow-lg text-base font-semibold text-white bg-arla-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-arla-blue transition-all duration-300 font-poppins disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <span id="button-text">Registrarse</span>
+              <svg id="loading-spinner" class="hidden ml-2 h-5 w-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </button>
+            
+            <!-- Enlace de login -->
+            <div class="mt-4 text-center">
+              <a href="/login" class="text-sm font-medium text-arla-blue hover:text-blue-700 transition-colors duration-200 font-inter">
+                ¿Ya tienes cuenta? Inicia sesión
+              </a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Mensaje de ayuda -->
+        <div class="mt-8 text-center reveal-right">
+          <p class="text-sm text-gray-200 font-inter">
+            ¿Necesita ayuda? 
+            <a href="/#contact" class="font-medium text-white hover:text-blue-200 transition-colors duration-200 underline underline-offset-2">
+              Contáctenos
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<!-- Notificaciones -->
+<div id="notifications" class="fixed top-4 right-4 z-50">
+  <div id="errorNotification" class="bg-white shadow-lg rounded-lg p-4 mb-4 hidden border-l-4 border-red-500">
+    <div class="flex items-center gap-2">
+      <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+      <p class="text-gray-700 font-inter" id="error-message">Error al registrarse</p>
+    </div>
+  </div>
+  <div id="successNotification" class="bg-white shadow-lg rounded-lg p-4 mb-4 hidden border-l-4 border-green-500">
+    <div class="flex items-center gap-2">
+      <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+      </svg>
+      <p class="text-gray-700 font-inter" id="success-message">
+        Registro exitoso. Revisa tu correo para activar tu cuenta.
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Deshabilitar scroll solo en la página de registro */
+  html.register-page,
+  body.register-page {
+    overflow: hidden !important;
+    height: 100vh !important;
+    position: relative !important;
+    width: 100% !important;
+  }
+
+  /* Estilos para hacer el navbar estático solo en register */
+  #navbar {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 1) !important;
+    transition: none !important;
+  }
+
+  #navbar.bg-white\/95,
+  #navbar.bg-transparent,
+  #navbar[class*="bg-"] {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    border-bottom: 1px solid rgba(229, 231, 235, 1) !important;
+  }
+
+  #navbar #logo-container {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition: none !important;
+  }
+
+  #navbar #logo-container.opacity-0,
+  #navbar #logo-container[class*="opacity-"] {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Ocultar completamente los botones de navegación en la página de registro */
+  #navbar #nav-items,
+  #navbar #nav-items * {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #navbar #nav-items.opacity-0,
+  #navbar #nav-items.opacity-100,
+  #navbar #nav-items[class*="opacity-"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  #navbar #menu-button-container,
+  #navbar #menu-button-container * {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #navbar #menu-button-container.hidden {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  .form-group {
+    position: relative;
+  }
+
+  .error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .error-input {
+    border-color: #dc2626 !important;
+    focus:ring-red-500 !important;
+  }
+
+  .error-label {
+    color: #dc2626 !important;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  .reveal-left.active,
+  .reveal-right.active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (max-width: 768px) {
+    .reveal,
+    .reveal-left,
+    .reveal-right {
+      transform: none;
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Prevenir scroll en la página de registro
+    document.documentElement.classList.add('register-page');
+    document.body.classList.add('register-page');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.height = '100vh';
+    document.documentElement.style.height = '100vh';
+    
+    // Prevenir scroll con eventos
+    function preventScroll(e) {
+      e.preventDefault();
+      return false;
+    }
+    
+    // Prevenir scroll en diferentes eventos
+    document.addEventListener('wheel', preventScroll, { passive: false });
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+    document.addEventListener('scroll', preventScroll, { passive: false });
+    
+    // Prevenir scroll con teclado
+    document.addEventListener('keydown', function(e) {
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // Hacer el navbar estático solo en esta página
+    const navbar = document.getElementById('navbar');
+    const navItems = document.getElementById('nav-items');
+    const logoContainer = document.getElementById('logo-container');
+    const menuButtonContainer = document.getElementById('menu-button-container');
+    
+    // Función para forzar el estado estático del navbar y ocultar botones
+    function forceNavbarStatic() {
+      if (navbar) {
+        navbar.classList.add('bg-white/95', 'shadow-lg', 'border-b', 'border-gray-100');
+        navbar.classList.remove('bg-transparent');
+      }
+      
+      if (logoContainer) {
+        logoContainer.classList.remove('opacity-0', 'pointer-events-none');
+        logoContainer.classList.add('opacity-100', 'pointer-events-auto');
+      }
+      
+      // Ocultar completamente los botones de navegación
+      if (navItems) {
+        navItems.style.display = 'none';
+        navItems.style.visibility = 'hidden';
+        navItems.style.opacity = '0';
+        navItems.style.pointerEvents = 'none';
+        navItems.classList.add('hidden');
+      }
+      
+      // Ocultar el botón hamburguesa
+      if (menuButtonContainer) {
+        menuButtonContainer.style.display = 'none';
+        menuButtonContainer.style.visibility = 'hidden';
+        menuButtonContainer.classList.add('hidden');
+      }
+    }
+    
+    // Aplicar estado estático inmediatamente
+    forceNavbarStatic();
+    
+    // Sobrescribir el comportamiento del scroll para mantener el navbar estático
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      scrollTimeout = setTimeout(() => {
+        forceNavbarStatic();
+      }, 10);
+    }, { passive: true });
+    
+    // También forzar en resize
+    window.addEventListener('resize', () => {
+      forceNavbarStatic();
+    });
+
+    const form = document.getElementById('registerForm');
+    const submitButton = document.getElementById('submitButton');
+    const buttonText = document.getElementById('button-text');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const togglePassword = document.getElementById('togglePassword');
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const eyeOffIcon = document.getElementById('eyeOffIcon');
+    const eyeIconConfirm = document.getElementById('eyeIconConfirm');
+    const eyeOffIconConfirm = document.getElementById('eyeOffIconConfirm');
+
+    // Verificar si se aceptaron los términos desde la página de términos y condiciones
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('accepted') === 'true') {
+      const termsCheckbox = document.getElementById('terms');
+      if (termsCheckbox) {
+        termsCheckbox.checked = true;
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    // Toggle password visibility
+    if (togglePassword && passwordInput && eyeIcon && eyeOffIcon) {
+      togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        eyeIcon.classList.toggle('hidden');
+        eyeOffIcon.classList.toggle('hidden');
+      });
+    }
+
+    // Toggle confirm password visibility
+    if (toggleConfirmPassword && confirmPasswordInput && eyeIconConfirm && eyeOffIconConfirm) {
+      toggleConfirmPassword.addEventListener('click', function() {
+        const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        confirmPasswordInput.setAttribute('type', type);
+        eyeIconConfirm.classList.toggle('hidden');
+        eyeOffIconConfirm.classList.toggle('hidden');
+      });
+    }
+
+    function showError(field, message) {
+      const formGroup = field.closest('.form-group');
+      const label = formGroup?.querySelector('label');
+      const errorDiv = formGroup?.querySelector('.error-message');
+      
+      field.classList.add('error-input');
+      if (label) label.classList.add('error-label');
+      if (errorDiv) {
+        errorDiv.textContent = message;
+        errorDiv.classList.remove('hidden');
+      }
+    }
+
+    function clearError(field) {
+      const formGroup = field.closest('.form-group');
+      const label = formGroup?.querySelector('label');
+      const errorDiv = formGroup?.querySelector('.error-message');
+      
+      field.classList.remove('error-input');
+      if (label) label.classList.remove('error-label');
+      if (errorDiv) errorDiv.classList.add('hidden');
+    }
+
+    function showNotification(type, message) {
+      const notification = document.getElementById(`${type}Notification`);
+      const messageElement = document.getElementById(`${type}-message`);
+      if (notification && messageElement) {
+        messageElement.textContent = message;
+        notification.classList.remove('hidden');
+        setTimeout(() => {
+          notification.classList.add('hidden');
+        }, 5000);
+      }
+    }
+
+    // Validación en tiempo real
+    ['companyName', 'email', 'password', 'confirmPassword'].forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        field.addEventListener('blur', () => {
+          if (!field.value.trim()) {
+            showError(field, 'Este campo es obligatorio');
+          } else if (fieldId === 'email') {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(field.value)) {
+              showError(field, 'Formato de email inválido');
+            }
+          } else if (fieldId === 'password' && field.value.length < 8) {
+            showError(field, 'La contraseña debe tener al menos 8 caracteres');
+          } else if (fieldId === 'confirmPassword') {
+            const passwordField = document.getElementById('password');
+            if (passwordField && field.value !== passwordField.value) {
+              showError(field, 'Las contraseñas no coinciden');
+            }
+          } else {
+            clearError(field);
+          }
+        });
+
+        field.addEventListener('input', () => {
+          if (field.value.trim()) {
+            clearError(field);
+          }
+        });
+      }
+    });
+
+    // Validación de confirmación de contraseña en tiempo real
+    if (confirmPasswordInput && passwordInput) {
+      confirmPasswordInput.addEventListener('input', () => {
+        if (confirmPasswordInput.value && confirmPasswordInput.value !== passwordInput.value) {
+          showError(confirmPasswordInput, 'Las contraseñas no coinciden');
+        } else if (confirmPasswordInput.value) {
+          clearError(confirmPasswordInput);
+        }
+      });
+    }
+
+    // Manejo del envío del formulario (CONEXIÓN REAL A /api/register)
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let hasErrors = false;
+
+        const companyNameField = document.getElementById('companyName');
+        const emailField = document.getElementById('email');
+        const passwordField = document.getElementById('password');
+        const confirmPasswordField = document.getElementById('confirmPassword');
+        const termsField = document.getElementById('terms');
+
+        if (!companyNameField?.value.trim()) {
+          showError(companyNameField, 'Este campo es obligatorio');
+          hasErrors = true;
+        }
+
+        if (!emailField?.value.trim()) {
+          showError(emailField, 'Este campo es obligatorio');
+          hasErrors = true;
+        } else {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(emailField.value)) {
+            showError(emailField, 'Formato de email inválido');
+            hasErrors = true;
+          }
+        }
+
+        if (!passwordField?.value.trim()) {
+          showError(passwordField, 'Este campo es obligatorio');
+          hasErrors = true;
+        } else if (passwordField.value.length < 8) {
+          showError(passwordField, 'La contraseña debe tener al menos 8 caracteres');
+          hasErrors = true;
+        }
+
+        if (!confirmPasswordField?.value.trim()) {
+          showError(confirmPasswordField, 'Este campo es obligatorio');
+          hasErrors = true;
+        } else if (passwordField && confirmPasswordField.value !== passwordField.value) {
+          showError(confirmPasswordField, 'Las contraseñas no coinciden');
+          hasErrors = true;
+        }
+
+        if (!termsField?.checked) {
+          showNotification('error', 'Debe aceptar los términos y condiciones');
+          hasErrors = true;
+        }
+
+        if (hasErrors) return;
+
+        // Deshabilitar botón y mostrar estado de carga
+        if (submitButton && buttonText && loadingSpinner) {
+          submitButton.disabled = true;
+          buttonText.textContent = 'Registrando...';
+          loadingSpinner.classList.remove('hidden');
+        }
+
+        try {
+          const companyName = companyNameField?.value || '';
+          const email = emailField?.value || '';
+          const password = passwordField?.value || '';
+
+          const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ companyName, email, password })
+          });
+
+          let data = null;
+          try {
+            data = await response.json();
+          } catch (_) {
+            data = null;
+          }
+
+          if (!response.ok) {
+            showNotification('error', data?.message || 'Error al registrar. Por favor, intente más tarde.');
+            return;
+          }
+
+          // ✅ Mensaje claro: debe verificar su correo
+          showNotification(
+            'success',
+            data?.message || 'Registro exitoso. Revisa tu correo para activar tu cuenta.'
+          );
+
+          // Redirigir a la página de verificación con el email
+          const redirectEmail = emailField?.value || '';
+          setTimeout(() => {
+            window.location.href = '/verificar-cuenta?email=' + encodeURIComponent(redirectEmail) + '&origin=register';
+          }, 1500);
+          
+        } catch (error) {
+          console.error(error);
+          showNotification('error', 'Error al registrar. Por favor, intente más tarde.');
+        } finally {
+          if (submitButton && buttonText && loadingSpinner) {
+            submitButton.disabled = false;
+            buttonText.textContent = 'Registrarse';
+            loadingSpinner.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    // Inicializar animaciones de reveal
+    function initScrollReveal() {
+      const options = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, options);
+
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((element) => {
+        observer.observe(element);
+      });
+    }
+
+    initScrollReveal();
+  });
+</script>

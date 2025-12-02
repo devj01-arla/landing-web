@@ -1,0 +1,463 @@
+---
+import { slides } from "../data/es/modules/hero.json";
+import { hero } from "../data/es/components.json";
+const { config } = Astro.props;
+---
+
+<section
+  class="relative h-screen overflow-hidden"
+  data-config={JSON.stringify(config)}
+>
+  <div class="slider-container relative w-full h-full overflow-hidden">
+    <div
+      class="slider flex w-full h-full transition-transform duration-1000 ease-in-out"
+    >
+      {
+        slides.map((slide, index) => (
+          <div
+            class="slide min-w-full h-full relative flex items-center justify-center text-center"
+            data-index={index}
+          >
+            <!-- Overlay mejorado con gradiente -->
+            <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70 z-10" />
+            
+            <!-- Imagen de fondo con efecto parallax -->
+            <div class="absolute inset-0 z-0">
+              <img
+                src={slide.image}
+                alt={slide.title}
+                class="w-full h-full object-cover transition-transform duration-700 ease-out"
+                data-parallax="true"
+              />
+            </div>
+            
+            <!-- Contenido principal centrado con mejor espaciado -->
+            <div class="relative z-20 text-white px-4 md:px-8 lg:px-16 max-w-6xl mx-auto py-16">
+              <!-- Título principal con mejor tipografía y espaciado -->
+              <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-poppins mb-8 leading-tight animate-fade-in">
+                <span class="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
+                  {slide.title}
+                </span>
+              </h1>
+              
+              <!-- Subtítulo mejorado con más espacio -->
+              <p class="text-xl md:text-2xl lg:text-3xl text-white/95 max-w-4xl mx-auto mb-8 font-inter font-medium leading-relaxed animate-fade-in">
+                {slide.subtitle}
+              </p>
+              
+              <!-- Descripción con mejor espaciado -->
+              {slide.description && (
+                <p class="text-base md:text-lg lg:text-xl text-white/85 max-w-3xl mx-auto mb-12 font-inter leading-relaxed animate-fade-in">
+                  {slide.description}
+                </p>
+              )}
+              
+              <!-- Botones mejorados con mejor diseño y espaciado -->
+              <div class="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in mb-16">
+                <a
+                  href={hero.slider.buttons.contactUs.href}
+                  class={`group ${hero.slider.buttons.contactUs.styles.base}`}
+                  onclick="event.preventDefault(); document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });"
+                >
+                  <span class="relative z-10 flex items-center justify-center gap-2">
+                    {hero.slider.buttons.contactUs.text}
+                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                  </span>
+                  <div class="absolute inset-0 bg-gradient-to-r from-arla-blue via-blue-600 to-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                </a>
+                
+                <a
+                  href={hero.slider.buttons.services.href}
+                  class={`group ${hero.slider.buttons.services.styles.base}`}
+                  onclick="event.preventDefault(); document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });"
+                >
+                  <span class="relative z-10 flex items-center justify-center gap-2">
+                    {hero.slider.buttons.services.text}
+                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                  </span>
+                  <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                </a>
+              </div>
+              
+              <!-- Indicador de scroll -->
+              <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <div class="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+                  <div class="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Botones de navegación mejorados -->
+  <button
+    class="absolute left-6 top-1/2 -translate-y-1/2 z-30 text-white p-3 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hidden md:block group hover:scale-110"
+    id="prevSlide"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      class="w-6 h-6 transition-transform duration-300 group-hover:-translate-x-1"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M15.75 19.5L8.25 12l7.5-7.5"></path>
+    </svg>
+  </button>
+  <button
+    class="absolute right-6 top-1/2 -translate-y-1/2 z-30 text-white p-3 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-300 hidden md:block group hover:scale-110"
+    id="nextSlide"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      class="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
+    </svg>
+  </button>
+
+  <!-- Indicadores de puntos mejorados -->
+  <div class="absolute bottom-8 left-0 right-0 z-30 flex justify-center gap-4 pointer-events-none">
+    {
+      slides.map((_, index) => (
+        <button
+          class="w-3 h-3 rounded-full transition-all duration-300 bg-white/40 hover:bg-white/60 cursor-pointer group"
+          data-dot={index}
+          onclick={`currentSlide = ${index}; updateSlides();`}
+        >
+          <span class="sr-only">Ir al slide {index + 1}</span>
+        </button>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  let currentSlide = 0;
+  let autoSlideInterval: ReturnType<typeof setInterval>;
+  const slider = document.querySelector('.slider') as HTMLElement;
+  const totalSlides = document.querySelectorAll('.slide').length;
+  const dots = document.querySelectorAll('[data-dot]');
+  const parallaxImages = document.querySelectorAll('[data-parallax="true"]');
+
+  function updateDots() {
+    dots.forEach((dot, index) => {
+      if (index === currentSlide) {
+        dot.classList.remove('bg-white/40', 'hover:bg-white/60');
+        dot.classList.add('bg-arla-blue', 'scale-125');
+      } else {
+        dot.classList.remove('bg-arla-blue', 'scale-125');
+        dot.classList.add('bg-white/40', 'hover:bg-white/60');
+      }
+    });
+  }
+
+  function updateSlides() {
+    if (slider) {
+      slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      updateDots();
+      
+      // Animar elementos del slide actual
+      const currentSlideElement = document.querySelector(`[data-index="${currentSlide}"]`);
+      if (currentSlideElement) {
+        // Resetear animaciones
+        const animatedElements = currentSlideElement.querySelectorAll('.animate-fade-in');
+        animatedElements.forEach(el => el.classList.remove('animate-fade-in'));
+        
+        // Aplicar animaciones con delay
+        setTimeout(() => {
+          animatedElements.forEach((el, index) => {
+            setTimeout(() => {
+              el.classList.add('animate-fade-in');
+            }, index * 200);
+          });
+        }, 100);
+      }
+    }
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlides();
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    updateSlides();
+  }
+
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(nextSlide, 6000);
+  }
+
+  function stopAutoSlide() {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval);
+    }
+  }
+
+  // Efecto parallax en scroll
+  function handleParallax() {
+    const scrolled = window.pageYOffset;
+    const rate = scrolled * -0.5;
+    
+    parallaxImages.forEach(img => {
+      (img as HTMLElement).style.transform = `translateY(${rate}px)`;
+    });
+  }
+
+  // Agregar eventos a los botones de navegación
+  const prevButton = document.getElementById('prevSlide');
+  const nextButton = document.getElementById('nextSlide');
+
+  if (prevButton) {
+    prevButton.addEventListener('click', () => {
+      prevSlide();
+      stopAutoSlide();
+      startAutoSlide();
+    });
+  }
+
+  if (nextButton) {
+    nextButton.addEventListener('click', () => {
+      nextSlide();
+      stopAutoSlide();
+      startAutoSlide();
+    });
+  }
+
+  // Pausar auto-slide al hacer hover
+  const heroSection = document.querySelector('section');
+  if (heroSection) {
+    heroSection.addEventListener('mouseenter', stopAutoSlide);
+    heroSection.addEventListener('mouseleave', startAutoSlide);
+  }
+
+  // Inicializar
+  document.addEventListener('DOMContentLoaded', () => {
+    updateSlides();
+    startAutoSlide();
+    
+    // Parallax effect
+    window.addEventListener('scroll', handleParallax);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+        stopAutoSlide();
+        startAutoSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+        stopAutoSlide();
+        startAutoSlide();
+      }
+    });
+  });
+
+  // Cleanup
+  window.addEventListener('beforeunload', () => {
+    stopAutoSlide();
+  });
+</script>
+
+<style>
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .slider {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide {
+    min-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .slider-indicator {
+    transition: all 0.3s ease;
+  }
+
+  /* Animaciones personalizadas */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-left {
+    animation: fadeInLeft 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-right {
+    animation: fadeInRight 0.8s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.8s ease-out forwards;
+  }
+
+  /* Efectos de hover mejorados */
+  .group:hover .group-hover\:scale-110 {
+    transform: scale(1.1);
+  }
+
+  .group:hover .group-hover\:translate-x-1 {
+    transform: translateX(0.25rem);
+  }
+
+  .group:hover .group-hover\:-translate-x-1 {
+    transform: translateX(-0.25rem);
+  }
+
+  .group:hover .group-hover\:rotate-12 {
+    transform: rotate(12deg);
+  }
+
+  /* Mejoras en los botones */
+  .group:hover .group-hover\:shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Efectos de glassmorphism */
+  .backdrop-blur-md {
+    backdrop-filter: blur(12px);
+  }
+
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
+
+  /* Gradientes personalizados */
+  .bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+  }
+
+  /* Mejoras en la tipografía */
+  .bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .text-transparent {
+    color: transparent;
+  }
+
+  /* Mejoras de espaciado */
+  .slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+
+  /* Responsive improvements */
+  @media (max-width: 768px) {
+    .slider {
+      transition: transform 0.6s ease-in-out;
+    }
+    
+    .animate-fade-in,
+    .animate-fade-in-left,
+    .animate-fade-in-right,
+    .animate-scale-in {
+      animation-duration: 0.6s;
+    }
+    
+    .slide {
+      padding: 1rem 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .slide {
+      padding: 0.5rem 0;
+    }
+  }
+
+  /* Mejoras de accesibilidad */
+  @media (prefers-reduced-motion: reduce) {
+    .slider {
+      transition: none;
+    }
+    
+    .animate-fade-in,
+    .animate-fade-in-left,
+    .animate-fade-in-right,
+    .animate-scale-in {
+      animation: none;
+    }
+    
+    .group:hover .group-hover\:scale-110,
+    .group:hover .group-hover\:translate-x-1,
+    .group:hover .group-hover\:-translate-x-1,
+    .group:hover .group-hover\:rotate-12 {
+      transform: none;
+    }
+  }
+</style>

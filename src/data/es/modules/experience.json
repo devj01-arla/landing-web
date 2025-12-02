@@ -1,0 +1,57 @@
+{
+    "aboutUs": {
+        "title": "Sobre nosotros",
+        "description": "Con más de 15 años de experiencia, transformamos datos en oportunidades. Ofrecemos servicios especializados en Data Engineering & Business Intelligence, Cloud & On-Premise Consulting, Data Science & Machine Learning, Process Optimization, y Dashboards & Data Visualization. Nuestro objetivo es potenciar la toma de decisiones estratégicas, optimizar operaciones y llevar tu empresa al siguiente nivel con tecnología de vanguardia.",
+        "stats": [
+            {
+                "number": "15",
+                "label": "Años de Experiencia",
+                "symbol": "+"
+            },
+            {
+                "number": "20",
+                "label": "Proyectos Completados",
+                "symbol": "+"
+            },
+            {
+                "number": "10",
+                "label": "Clientes Satisfechos",
+                "symbol": "+"
+            },
+            {
+                "number": "95",
+                "label": "Tasa de Retención",
+                "symbol": "%"
+            }
+        ]
+    }, 
+    "whyChooseUs":{
+        "title": "¿Por qué elegirnos?",
+        "description": "Somos un equipo de profesionales apasionados por la tecnología y la innovación. Nos enfocamos en ofrecer soluciones personalizadas y de calidad, adaptadas a las necesidades de cada cliente. Nuestro compromiso es brindar un servicio integral, desde la consultoría y el diseño hasta la implementación y el soporte continuo. Trabajamos en estrecha colaboración con nuestros clientes para garantizar su satisfacción y el éxito de sus proyectos.",
+        "items": [
+            {
+                "title": "Experiencia",
+                "description": "Con más de 15 años de experiencia en el sector, contamos con un amplio conocimiento y expertise en tecnologías de vanguardia."
+            },
+            {
+                "title": "Equipo",
+                "description": "Nuestro equipo está formado por profesionales altamente cualificados y comprometidos con la excelencia en el servicio."
+            },
+            {
+                "title": "Innovación",
+                "description": "Nos mantenemos a la vanguardia de las últimas tendencias y tecnologías para ofrecer soluciones innovadoras y eficientes."
+            },
+            {
+                "title": "Compromiso",
+                "description": "Nos comprometemos a brindar un servicio de calidad, personalizado y adaptado a las necesidades de cada cliente."
+            }
+        ],
+        "video": {
+            "url": "https://www.youtube.com/embed/UGuYUGd-zBI?enablejsapi=1",
+            "info": {
+                "title": "En Arla & Asociados",
+                "description": "Llevamos tu empresa al siguiente nivel."
+            }
+        }
+    }
+}

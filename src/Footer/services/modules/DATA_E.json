@@ -1,0 +1,31 @@
+{
+    "title": "Data Engineering & Business Intelligence",
+    "hero": {
+        "title": "Transformamos Datos en Decisiones",
+        "subtitle": "Soluciones de Ingeniería de Datos e Inteligencia de Negocios",
+        "description": "Optimizamos la gestión y análisis de datos para impulsar el crecimiento de tu empresa",
+        "image": "/DATA ENGINEERING & BUSINESS INTELLIGENCE.jpg"
+    },
+    "sections": [
+        {
+            "title": "Nuestras Soluciones",
+            "items": [
+                {
+                    "title": "Integración de Datos",
+                    "description": "Unificamos datos de múltiples fuentes en una única plataforma",
+                    "image": "/Integración de Datos.jpg"
+                },
+                {
+                    "title": "Data Warehousing",
+                    "description": "Diseñamos e implementamos almacenes de datos escalables",
+                    "image": "/Data Warehousing.jpg"
+                },
+                {
+                    "title": "Data Lakehouse",
+                    "description": "Unificamos almacenamiento y análisis en una sola arquitectura escalable",
+                    "image": "/Data Lakehouse.jpg"
+                }
+            ]
+        }
+    ]
+}

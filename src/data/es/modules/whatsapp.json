@@ -1,0 +1,8 @@
+{
+    "whatsapp": {
+        "number": "+51912235161",
+        "message": "Hola, me comunico desde la página de Arla & Asociados. Me gustaría saber más sobre sus servicios y cómo pueden ayudarme. Agradezco su atención y quedo atento(a) a su respuesta. Saludos.",
+        "icon": "/icons/whatsapp.svg",
+        "ariaLabel": "Contactar por WhatsApp"
+    }
+} 

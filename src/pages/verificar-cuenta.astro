@@ -1,0 +1,272 @@
+---
+export const prerender = false; // 👈 IMPORTANTE
+
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+// Astro.url ya es un objeto URL cuando prerender = false
+const url = Astro.url;
+const email = url.searchParams.get('email') ?? '';
+const origin = url.searchParams.get('origin') ?? ''; // 'register' | 'login' | ''
+---
+
+<Layout title="Verifica tu cuenta | Arla & Asociados">
+  <Navbar />
+  <main class="relative h-screen pt-20 overflow-hidden" data-email={email}>
+    <!-- Fondo -->
+    <div class="fixed inset-0 z-0">
+      <img 
+        src="/fondo.png" 
+        alt="Fondo decorativo" 
+        class="w-full h-full object-cover"
+      />
+    </div>
+
+    <div class="relative flex items-center justify-center h-[calc(100vh-5rem)] px-4 sm:px-6 lg:px-8 py-12 z-20">
+      <div class="w-full max-w-md">
+        <div class="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8 relative z-20">
+          <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900 font-poppins mb-2">
+              Verifica tu cuenta
+            </h1>
+            <p class="text-sm text-gray-600 font-inter">
+              Te hemos enviado un correo con un enlace para activar tu cuenta.
+            </p>
+            {email && (
+              <p class="text-sm text-gray-600 font-inter mt-2">
+                Correo de destino:&nbsp;
+                <strong>{email}</strong>
+              </p>
+            )}
+          </div>
+
+          <div class="space-y-3 text-sm text-gray-600 font-inter mb-6">
+            <p>
+              1. Revisa tu bandeja de entrada y tu carpeta de <strong>spam</strong> o
+              <strong> correo no deseado</strong>.
+            </p>
+            <p>
+              2. Haz clic en el botón <strong>"Verificar mi cuenta"</strong> del correo.
+            </p>
+            <p>
+              3. Una vez verificada, podrás iniciar sesión en tu panel.
+            </p>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="space-y-3">
+            <!-- Reenviar correo -->
+            <button
+              id="resendButton"
+              type="button"
+              class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-semibold text-white bg-arla-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-arla-blue transition-all duration-300 font-poppins disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span id="resendButtonText">Reenviar correo de verificación</span>
+              <svg id="resendSpinner" class="hidden ml-2 h-5 w-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </button>
+
+            <!-- Comprobar ahora -->
+            <button
+              id="checkStatusButton"
+              type="button"
+              class="w-full flex justify-center items-center py-2.5 px-4 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-all duración-200 font-inter"
+            >
+              Ya verifiqué mi cuenta, comprobar ahora
+            </button>
+
+            <p id="cooldownText" class="text-xs text-gray-500 text-center hidden font-inter">
+              Podrás solicitar otro correo en <span id="cooldownSeconds">60</span> segundos.
+            </p>
+          </div>
+
+          <div class="mt-6 text-center text-sm text-gray-600 font-inter">
+            <a href="/login" class="text-arla-blue hover:text-blue-700 font-medium">
+              Volver al inicio de sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Notificaciones -->
+  <div id="notifications" class="fixed top-4 right-4 z-50">
+    <div id="errorNotification" class="bg-white shadow-lg rounded-lg p-4 mb-4 hidden border-l-4 border-red-500">
+      <div class="flex items-center gap-2">
+        <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+        <p class="text-gray-700 font-inter" id="error-message">Error al reenviar correo</p>
+      </div>
+    </div>
+    <div id="successNotification" class="bg-white shadow-lg rounded-lg p-4 mb-4 hidden border-l-4 border-green-500">
+      <div class="flex items-center gap-2">
+        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <p class="text-gray-700 font-inter" id="success-message">
+          Correo reenviado correctamente.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  html.verificar-page,
+  body.verificar-page {
+    overflow: hidden !important;
+    height: 100vh !important;
+    position: relative !important;
+    width: 100% !important;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.documentElement.classList.add('verificar-page');
+    document.body.classList.add('verificar-page');
+
+    const main = document.querySelector('main[data-email]');
+    const email = main?.getAttribute('data-email') || '';
+
+    const resendButton = document.getElementById('resendButton');
+    const resendButtonText = document.getElementById('resendButtonText');
+    const resendSpinner = document.getElementById('resendSpinner');
+    const cooldownText = document.getElementById('cooldownText');
+    const cooldownSecondsEl = document.getElementById('cooldownSeconds');
+
+    const checkStatusButton = document.getElementById('checkStatusButton');
+
+    const errorNotification = document.getElementById('errorNotification');
+    const errorMessageEl = document.getElementById('error-message');
+    const successNotification = document.getElementById('successNotification');
+    const successMessageEl = document.getElementById('success-message');
+
+    function showNotification(type, message) {
+      if (errorNotification) errorNotification.classList.add('hidden');
+      if (successNotification) successNotification.classList.add('hidden');
+
+      if (type === 'error') {
+        if (errorMessageEl) errorMessageEl.textContent = message || 'Ha ocurrido un error.';
+        errorNotification?.classList.remove('hidden');
+        setTimeout(() => errorNotification?.classList.add('hidden'), 6000);
+      } else {
+        if (successMessageEl) successMessageEl.textContent = message || 'Acción realizada correctamente.';
+        successNotification?.classList.remove('hidden');
+        setTimeout(() => successNotification?.classList.add('hidden'), 6000);
+      }
+    }
+
+    function startCooldown(seconds) {
+      if (!cooldownText || !cooldownSecondsEl || !resendButton || !resendButtonText) return;
+
+      let remaining = seconds;
+      resendButton.disabled = true;
+      cooldownText.classList.remove('hidden');
+      cooldownSecondsEl.textContent = String(remaining);
+
+      const interval = setInterval(() => {
+        remaining -= 1;
+        cooldownSecondsEl.textContent = String(remaining);
+        if (remaining <= 0) {
+          clearInterval(interval);
+          cooldownText.classList.add('hidden');
+          resendButton.disabled = false;
+        }
+      }, 1000);
+    }
+
+    async function handleResend() {
+      if (!resendButton || !resendButtonText || !resendSpinner) return;
+
+      if (!email) {
+        showNotification('error', 'No se encontró el correo en la URL.');
+        return;
+      }
+
+      resendButton.disabled = true;
+      resendButtonText.textContent = 'Reenviando...';
+      resendSpinner.classList.remove('hidden');
+
+      const username = email; // usamos el correo pasado por query
+
+      try {
+        const res = await fetch('/api/resend-verification', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username }),
+        });
+
+        const data = await res.json().catch(() => null);
+
+        if (!res.ok) {
+          showNotification('error', data?.message || 'No se pudo reenviar el correo.');
+        } else {
+          showNotification(
+            'success',
+            data?.message || 'Hemos reenviado el correo de verificación.'
+          );
+          // Cooldown de 60 segundos
+          startCooldown(60);
+        }
+      } catch (err) {
+        console.error(err);
+        showNotification('error', 'Error al conectar con el servidor.');
+      } finally {
+        resendButton.disabled = false;
+        resendButtonText.textContent = 'Reenviar correo de verificación';
+        resendSpinner.classList.add('hidden');
+      }
+    }
+
+    async function handleCheckStatus() {
+      if (!email) {
+        showNotification('error', 'No se encontró el correo en la URL.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/check-verification-status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await res.json().catch(() => null);
+
+        if (!res.ok) {
+          showNotification('error', data?.message || 'No se pudo comprobar el estado.');
+          return;
+        }
+
+        if (data?.verified) {
+          showNotification('success', 'Tu cuenta ya está verificada. Ya puedes iniciar sesión.');
+          setTimeout(() => {
+            window.location.href = '/login';
+          }, 1500);
+        } else {
+          showNotification(
+            'error',
+            'Todavía no vemos tu cuenta verificada. Revisa tu correo o espera unos segundos.'
+          );
+        }
+      } catch (err) {
+        console.error(err);
+        showNotification('error', 'Error al conectar con el servidor.');
+      }
+    }
+
+    if (resendButton) {
+      resendButton.addEventListener('click', handleResend);
+    }
+
+    if (checkStatusButton) {
+      checkStatusButton.addEventListener('click', handleCheckStatus);
+    }
+  });
+</script>

@@ -1,0 +1,98 @@
+---
+import { whatsapp } from '../data/es/modules/whatsapp.json';
+---
+
+<div class="whatsapp-container">
+  <div class="tooltip">Contáctanos</div>
+  <a
+    href={`https://wa.me/${whatsapp.number.replace(/\s+/g, '')}?text=${encodeURIComponent(whatsapp.message)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-button"
+    aria-label={whatsapp.ariaLabel}
+  >
+    <img
+      src={whatsapp.icon}
+      alt="WhatsApp"
+      width="80"
+      height="80"
+      class="drop-shadow-lg md:w-[4.4rem] md:h-[4.4rem] w-[2.75rem] h-[2.75rem]"
+    />
+  </a>
+</div>
+
+<style>
+  .whatsapp-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .tooltip {
+    position: absolute;
+    right: calc(100% + 12px);
+    background-color: #25D366;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 2px 12px rgba(37, 211, 102, 0.35);
+    opacity: 0;
+    transform: translateX(10px);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .tooltip::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent transparent #25D366;
+  }
+
+  .whatsapp-button {
+    transition: transform 0.3s ease;
+    display: block;
+  }
+
+  .whatsapp-button:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+  }
+
+  .whatsapp-container:hover .tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .whatsapp-container:not(:hover) .tooltip {
+    transition-delay: 0.5s;
+  }
+
+  @media (max-width: 768px) {
+    .whatsapp-container {
+      bottom: 1rem;
+      right: 1rem;
+    }
+    
+    img {
+      width: 60px;
+      height: 60px;
+    }
+
+    .tooltip {
+      display: none;
+    }
+  }
+</style> 

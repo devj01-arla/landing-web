@@ -1,0 +1,31 @@
+{
+    "title": "Dashboards & Data Visualization",
+    "hero": {
+        "title": "Visualización de Datos Interactiva",
+        "subtitle": "Dashboards Intuitivos y Personalizados",
+        "description": "Transformamos datos complejos en visualizaciones claras y accionables",
+        "image": "/DASHBOARDS & DATA VISUALIZATION.png"
+    },
+    "sections": [
+        {
+            "title": "Nuestras Soluciones",
+            "items": [
+                {
+                    "title": "Dashboards Ejecutivos",
+                    "description": "Visualizaciones clave para la toma de decisiones",
+                    "image": "/Dashboards Ejecutivos.jpg"
+                },
+                {
+                    "title": "KPIs en Tiempo Real",
+                    "description": "Monitoreo continuo de indicadores críticos",
+                    "image": "/KPIs en Tiempo Real.jpg"
+                },
+                {
+                    "title": "Reportes Interactivos",
+                    "description": "Informes dinámicos y personalizables",
+                    "image": "/Reportes Interactivos.jpg"
+                }
+            ]
+        }
+    ]
+}

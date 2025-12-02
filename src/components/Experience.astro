@@ -1,0 +1,210 @@
+---
+import { aboutUs, whyChooseUs } from '../data/es/modules/experience.json';
+---
+
+<section id="experience" class="py-20 bg-arla-white w-full overflow-x-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-4xl font-bold text-gray-900 font-poppins">{aboutUs.title}</h2>
+      <p class="mt-4 text-xl text-gray-600 font-inter">{aboutUs.description}</p>
+      <!-- <p class="mt-4 text-xl text-gray-600 font-inter">{aboutUs.description_two}</p> -->
+    </div>
+    
+    <div class="grid md:grid-cols-4 gap-8 mb-16">
+      {aboutUs.stats.map((stat, index) => (
+        <div class={`text-center reveal delay-${index * 200}`}>
+          <div class="text-5xl font-bold text-arla-blue mb-2 font-poppins">
+            <span class="counter" data-target={stat.number}>0</span>{stat.symbol}
+          </div>
+          <div class="text-gray-600 font-inter">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="reveal-left">
+        <h3 class="text-3xl font-bold text-gray-900 mb-6 font-poppins">{whyChooseUs.title}</h3>
+        <div class="space-y-4">
+          {whyChooseUs.items.map((feature) => (
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-arla-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold text-gray-900 font-poppins">{feature.title}</h4>
+                <p class="mt-2 text-gray-600 font-inter">{feature.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="layout-chooseus relative reveal-right transform transition-transform duration-500 hover:translate-y-[-10px] hover:shadow-2xl">
+        <div class="relative w-full pb-[56.25%]">
+          <iframe
+            id="youtubeVideo"
+            class="absolute top-0 left-0 w-full h-full rounded-lg shadow-xl pointer-events-none"
+            src="https://www.youtube.com/embed/UGuYUGd-zBI?enablejsapi=1&version=3&autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=UGuYUGd-zBI&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            loading="lazy">
+          </iframe>
+        </div>
+        <div class="card-chooseus absolute -bottom-6 -left-6 bg-arla-blue text-white p-4 md:p-6 rounded-lg transition-all duration-500 max-w-[90%] md:max-w-none text-center scale-100 md:scale-100 sm:scale-75">
+          <p class="text-xl md:text-2xl font-bold font-poppins">{whyChooseUs.video.info.title}</p>
+          <p class="text-xs md:text-sm font-inter">{whyChooseUs.video.info.description}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function animateCounter(counter, target) {
+    const duration = 2000;
+    const steps = 50;
+    const stepDuration = duration / steps;
+    const increment = target / steps;
+    let current = 0;
+    let step = 0;
+
+    const timer = setInterval(() => {
+      step++;
+      current = Math.round(increment * step);
+      
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      
+      counter.textContent = current;
+    }, stepDuration);
+  }
+
+  function startCounterAnimations() {
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-target') || '0');
+      animateCounter(counter, target);
+    });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        startCounterAnimations();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.1 });
+
+  const experienceSection = document.querySelector('#experience');
+  if (experienceSection) {
+    observer.observe(experienceSection);
+  }
+
+  // Script para el control del video de YouTube
+  let player: any;
+  
+  // Declarar el tipo YT
+  declare global {
+    interface Window {
+      YT: any;
+      onYouTubeIframeAPIReady: () => void;
+    }
+  }
+  
+  window.onYouTubeIframeAPIReady = function() {
+    player = new window.YT.Player('youtubeVideo', {
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerReady(event: any) {
+    event.target.playVideo();
+    event.target.mute();
+  }
+
+  function onPlayerStateChange(event: any) {
+    // Verificar si el video ha terminado
+    if (event.data === window.YT.PlayerState.ENDED) {
+      player.playVideo();
+    }
+  }
+
+  // Cargar la API de YouTube de manera segura
+  function loadYouTubeAPI() {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    if (firstScriptTag && firstScriptTag.parentNode) {
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+  }
+
+  // Función para verificar y reiniciar el video periódicamente
+  function checkVideoStatus() {
+    if (player && typeof player.getPlayerState === 'function') {
+      const state = player.getPlayerState();
+      if (state === window.YT.PlayerState.ENDED || state === window.YT.PlayerState.PAUSED) {
+        player.playVideo();
+      }
+    }
+  }
+
+  // Inicializar todo cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', () => {
+    loadYouTubeAPI();
+    // Verificar el estado del video cada 5 segundos
+    setInterval(checkVideoStatus, 5000);
+  });
+</script>
+
+<style>
+  #nav-items {
+    transition: opacity 0.3s ease-in-out;
+  }
+  .opacity-0 {
+    opacity: 0;
+  }
+  .opacity-100 {
+    opacity: 1;
+  }
+  .pointer-events-none {
+    pointer-events: none;
+  }
+  .pointer-events-auto {
+    pointer-events: auto;
+  }
+  .-translate-y-full {
+    transform: translateY(-100%);
+  }
+  .translate-y-0 {
+    transform: translateY(0);
+  }
+  .layout-chooseus {
+    animation: float 3s ease-in-out infinite;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .card-chooseus {
+      transform: scale(0.7);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+</style>

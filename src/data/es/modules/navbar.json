@@ -1,0 +1,26 @@
+{
+    "logo": {
+        "img": "/logo.png",
+        "alt": "Logo Arla & Asociados",
+        "href": "/",
+        "title": "Arla & Asociados"
+    },
+    "itemsNav": [
+        {
+            "name": "Inicio",
+            "href": "/"
+        },
+        {
+            "name": "Servicios",
+            "href": "#services"
+        },
+        {
+            "name": "Acerca de",
+            "href": "#experience"
+        },
+        {
+            "name": "Contacto",
+            "href": "#contact"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+  const services = ['DATA_E', 'CLOUD', 'SCIENCE', 'PROCESS', 'DASHBOARDS'];
+  return services.map(service => ({
+    params: { service }
+  }));
+}) satisfies GetStaticPaths;
+
+const { service } = Astro.params;
+const Component = await import(`../../../Footer/services/components/${service}.astro`);
+---
+
+<Component.default /> 

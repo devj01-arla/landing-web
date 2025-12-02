@@ -1,0 +1,127 @@
+---
+// Componente de animación de introducción con el logo
+---
+
+<div id="logo-animation" class="logo-animation-overlay">
+  <div class="logo-animation-container">
+    <img 
+      src="/logo.png" 
+      alt="Arla & Asociados" 
+      class="logo-animation-image"
+      id="logo-animation-img"
+    />
+  </div>
+</div>
+
+<style>
+  .logo-animation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+  }
+
+  .logo-animation-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .logo-animation-image {
+    width: 200px;
+    height: auto;
+    opacity: 1;
+    transform: scale(1);
+    transition: all 1s ease-in-out;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+  }
+
+  /* Animación cuando se carga la página */
+  .logo-animation-overlay.loading .logo-animation-image {
+    transform: scale(15);
+    opacity: 0;
+  }
+
+  /* Estado final - ocultar overlay */
+  .logo-animation-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .logo-animation-image {
+      width: 150px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo-animation-image {
+      width: 120px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('logo-animation');
+    const logoImg = document.getElementById('logo-animation-img');
+    
+    if (!overlay || !logoImg) return;
+
+    // Función para iniciar la animación
+    function startAnimation() {
+      if (!overlay) return; // Verificación adicional
+      
+      // Esperar un momento para que la imagen se cargue
+      setTimeout(() => {
+        if (!overlay) return; // Verificación antes de usar overlay
+        
+        // Agregar clase para iniciar la animación de escala
+        overlay.classList.add('loading');
+        
+        // Después de la animación, ocultar completamente
+        setTimeout(() => {
+          if (!overlay) return; // Verificación antes de usar overlay
+          
+          overlay.classList.add('hidden');
+          
+          // Remover el elemento del DOM después de la transición
+          setTimeout(() => {
+            if (overlay && overlay.parentNode) {
+              overlay.parentNode.removeChild(overlay);
+            }
+          }, 500); // Esperar a que termine la transición de opacity
+        }, 1000); // Duración de la animación de escala
+      }, 100); // Pequeño delay para asegurar que la imagen esté cargada
+    }
+
+    // Verificar si la imagen ya está cargada
+    if ((logoImg as HTMLImageElement).complete) {
+      startAnimation();
+    } else {
+      // Esperar a que la imagen se cargue
+      logoImg.addEventListener('load', startAnimation);
+      logoImg.addEventListener('error', startAnimation); // En caso de error, iniciar de todos modos
+    }
+
+    // Fallback: iniciar animación después de 2 segundos máximo
+    setTimeout(() => {
+      if (!overlay.classList.contains('loading')) {
+        startAnimation();
+      }
+    }, 2000);
+  });
+</script>

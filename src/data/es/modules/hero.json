@@ -1,0 +1,34 @@
+{
+    "slides": [
+        {
+            "image": "/DATA ENGINEERING & BUSINESS INTELLIGENCE.jpg",
+            "title": "DATA ENGINEERING & BUSINESS INTELLIGENCE",
+            "subtitle": "Transforma tus datos en información valiosa",
+            "description": "Ofrecemos soluciones de Ingeniería de Datos e Inteligencia Comercial para optimizar la toma de decisiones empresariales."
+        },
+        {
+            "image": "/CLOUD & ON-PREMISE CONSULTING.jpeg",
+            "title": "CLOUD & ON-PREMISE CONSULTING",
+            "subtitle": "Soluciones en la nube y en sitio",
+            "description": "Brindamos consultoría especializada para implementar y gestionar infraestructuras tanto en la nube como en sitio."
+        },
+        {
+            "image": "/DATA SCIENCE & MACHINE LEARNING.jpeg",
+            "title": "DATA SCIENCE & MACHINE LEARNING",
+            "subtitle": "Impulsa tu negocio con inteligencia artificial",
+            "description": "Desarrollamos modelos de machine learning para predecir tendencias y mejorar la eficiencia operativa."
+        },
+        {
+            "image": "/PROCESS OPTIMIZATION.png",
+            "title": "PROCESS OPTIMIZATION",
+            "subtitle": "Optimiza y automatiza tus procesos",
+            "description": "Implementamos soluciones de automatización para reducir costos y aumentar la productividad."
+        },
+        {
+            "image": "/DASHBOARDS & DATA VISUALIZATION.png",
+            "title": "DASHBOARDS & DATA VISUALIZATION",
+            "subtitle": "Visualiza tus datos en tiempo real",
+            "description": "Creamos dashboards personalizados en la nube para monitorear y analizar el rendimiento de tu negocio."
+        }
+    ]
+}
