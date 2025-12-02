@@ -16,13 +16,11 @@ dist/
 build/
 .cache/
 
+# Vercel output
+.vercel/
+
 # Astro specific
 .astro/
-
-# Tailwind CSS
-tailwind.config.js
-tailwind.config.cjs
-tailwind.config.mjs
 
 # TypeScript
 *.tsbuildinfo
