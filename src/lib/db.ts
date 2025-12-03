@@ -41,14 +41,25 @@ export async function query<T = any>(
   let paramIndex = 1;
   const convertedSql = sql.replace(/\?/g, () => `$${paramIndex++}`);
   
-  // Debug en desarrollo
-  if (process.env.NODE_ENV === 'development') {
-    console.log('[DB Query]', convertedSql);
-    console.log('[DB Params]', params);
-  }
+  // Debug (temporal para identificar el problema)
+  console.log('[DB Query]', convertedSql.replace(/\s+/g, ' ').trim());
+  console.log('[DB Params]', params);
+  console.log('[DB Params Count]', params.length);
+  console.log('[Placeholders in SQL]', (sql.match(/\?/g) || []).length);
   
-  const result = await pool.query(convertedSql, params);
-  return { rows: result.rows as T[] };
+  try {
+    const result = await pool.query(convertedSql, params);
+    return { rows: result.rows as T[] };
+  } catch (error: any) {
+    console.error('[DB Error Details]', {
+      sql: convertedSql.replace(/\s+/g, ' ').trim(),
+      params,
+      errorCode: error.code,
+      errorMessage: error.message,
+      errorPosition: error.position
+    });
+    throw error;
+  }
 }
 
 // Función para obtener una conexión directa (útil para transacciones o DDL)
