@@ -74,7 +74,7 @@ export const POST: APIRoute = async ({ request }) => {
       // 4) Guardar token en BD (expira en N horas)
       await query(
         `INSERT INTO tbl_email_verification_tokens (cliente_id, token, expires_at)
-         VALUES (?, ?, DATE_ADD(NOW(), INTERVAL ${EMAIL_VERIFICATION_EXPIRES_HOURS} HOUR))`,
+         VALUES (?, ?, NOW() + INTERVAL '${EMAIL_VERIFICATION_EXPIRES_HOURS} hours')`,
         [cliente.id, token]
       );
 
@@ -109,7 +109,8 @@ export const POST: APIRoute = async ({ request }) => {
         { status: 201, headers: { 'Content-Type': 'application/json' } }
       );
     } catch (err: any) {
-      if (err.code === 'ER_DUP_ENTRY') {
+      // PostgreSQL usa código 23505 para violación de constraint único
+      if (err.code === 'ER_DUP_ENTRY' || err.code === '23505') {
         return new Response(
           JSON.stringify({ message: 'El correo ya está registrado.' }),
           { status: 409, headers: { 'Content-Type': 'application/json' } }

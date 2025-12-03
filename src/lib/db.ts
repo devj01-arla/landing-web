@@ -32,11 +32,16 @@ const pool = new Pool(getConnectionConfig());
 
 // 👇 Versión simple, tipo genérico compatible con PostgreSQL
 // Útil para queries SQL directas y creación de tablas manualmente
+// Convierte placeholders ? a $1, $2, $3 que PostgreSQL requiere
 export async function query<T = any>(
   sql: string,
   params: any[] = []
 ): Promise<{ rows: T[] }> {
-  const result = await pool.query(sql, params);
+  // Convertir placeholders ? a $1, $2, $3 para PostgreSQL
+  let paramIndex = 1;
+  const convertedSql = sql.replace(/\?/g, () => `$${paramIndex++}`);
+  
+  const result = await pool.query(convertedSql, params);
   return { rows: result.rows as T[] };
 }
 

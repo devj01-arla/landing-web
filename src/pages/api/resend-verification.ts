@@ -97,7 +97,7 @@ export const POST: APIRoute = async ({ request }) => {
     // 4) Guardar token (expira en 24 horas; si lo tienes en .env, cámbialo aquí)
     await query(
       `INSERT INTO tbl_email_verification_tokens (cliente_id, token, expires_at)
-       VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 1 DAY))`,
+       VALUES (?, ?, NOW() + INTERVAL '24 hours')`,
       [cliente.id, token]
     );
 
