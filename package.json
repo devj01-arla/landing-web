@@ -21,6 +21,7 @@
     "@fontsource/inter": "^5.0.16",
     "@fontsource/poppins": "^5.0.8",
     "@google/generative-ai": "^0.24.1",
+    "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "@sendgrid/mail": "^8.1.6",
     "astro": "^5.2.5",

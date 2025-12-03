@@ -1,6 +1,8 @@
 // src/lib/prisma.ts
 // Cliente de Prisma para usar como ORM
 import { PrismaClient } from '@prisma/client';
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
 
 // Construir DATABASE_URL desde variables de entorno si no existe
 function getDatabaseUrl(): string | undefined {
@@ -25,7 +27,7 @@ function getDatabaseUrl(): string | undefined {
   return undefined;
 }
 
-// Configurar DATABASE_URL en process.env (Prisma lo lee automáticamente)
+// Configurar DATABASE_URL
 const databaseUrl = getDatabaseUrl();
 if (databaseUrl && !process.env.DATABASE_URL) {
   process.env.DATABASE_URL = databaseUrl;
@@ -41,13 +43,20 @@ const prismaConfig: any = {
   log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
 };
 
-// Prisma 7: Solo necesitamos especificar accelerateUrl si es Prisma Accelerate
-// Para PostgreSQL normal, Prisma lee DATABASE_URL automáticamente de process.env
+// Prisma 7 requiere adapter o accelerateUrl
 const finalDatabaseUrl = databaseUrl || process.env.DATABASE_URL;
-if (finalDatabaseUrl && finalDatabaseUrl.startsWith('prisma+')) {
-  prismaConfig.accelerateUrl = finalDatabaseUrl;
+
+if (finalDatabaseUrl) {
+  if (finalDatabaseUrl.startsWith('prisma+')) {
+    // Si es Prisma Accelerate, usar accelerateUrl
+    prismaConfig.accelerateUrl = finalDatabaseUrl;
+  } else {
+    // Si no, crear adapter de PostgreSQL
+    const pool = new Pool({ connectionString: finalDatabaseUrl });
+    const adapter = new PrismaPg(pool);
+    prismaConfig.adapter = adapter;
+  }
 }
-// Si no es Accelerate, no pasamos nada - Prisma usa DATABASE_URL de process.env automáticamente
 
 export const prisma =
   globalForPrisma.prisma ?? new PrismaClient(prismaConfig);
