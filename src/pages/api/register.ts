@@ -2,11 +2,10 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
-import { query } from '../../lib/db';
+import { prisma } from '../../lib/prisma';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { sendVerificationEmail } from '../../lib/email';
-import type { ClienteRow } from '../../types/cliente';
 
 const EMAIL_VERIFICATION_EXPIRES_HOURS = Number(
   import.meta.env.EMAIL_VERIFICATION_EXPIRES_HOURS ??
@@ -38,50 +37,40 @@ export const POST: APIRoute = async ({ request }) => {
     const passwordHash = await bcrypt.hash(password, 10);
 
     try {
-      // 1) Insertar cliente como INACTIVO (activo = 0)
-      const now = new Date();
-      await query(
-        `INSERT INTO tbl_clientes (empresa, correo, password, activo, fecha_registro, fecha_modificacion)
-         VALUES (?, ?, ?, ?, ?, ?)`,
-        [companyName, email, passwordHash, 0, now, now]
-      );
+      // 1) Insertar cliente como INACTIVO (activo = 0) usando Prisma
+      const cliente = await prisma.cliente.create({
+        data: {
+          empresa: companyName,
+          correo: email,
+          password: passwordHash,
+          activo: 0,
+        },
+        select: {
+          id: true,
+          empresa: true,
+          correo: true,
+          activo: true,
+          fecha_registro: true,
+          fecha_modificacion: true,
+        },
+      });
 
-      // 2) Obtener el id del cliente recién creado
-      const result = await query<ClienteRow>(
-        `SELECT id, empresa, correo, activo, fecha_registro, fecha_modificacion
-         FROM tbl_clientes
-         WHERE correo = ?
-         LIMIT 1`,
-        [email]
-      );
-
-      if (result.rows.length === 0) {
-        console.error(
-          '[REGISTER] No se encontró el cliente después de insertarlo'
-        );
-        return new Response(
-          JSON.stringify({
-            message: 'Error interno al registrar el usuario.',
-          }),
-          { status: 500, headers: { 'Content-Type': 'application/json' } }
-        );
-      }
-
-      const cliente = result.rows[0];
-
-      // 3) Generar token de verificación
+      // 2) Generar token de verificación
       const token = crypto.randomBytes(32).toString('hex');
 
-      // 4) Guardar token en BD (expira en N horas)
-      // Calcular fecha de expiración en JavaScript para evitar problemas de interpolación
+      // 3) Calcular fecha de expiración
       const expiresAt = new Date();
       expiresAt.setHours(expiresAt.getHours() + EMAIL_VERIFICATION_EXPIRES_HOURS);
-      
-      await query(
-        `INSERT INTO tbl_email_verification_tokens (cliente_id, token, expires_at)
-         VALUES (?, ?, ?)`,
-        [cliente.id, token, expiresAt]
-      );
+
+      // 4) Guardar token en BD usando Prisma
+      await prisma.emailVerificationToken.create({
+        data: {
+          cliente_id: cliente.id,
+          token: token,
+          expires_at: expiresAt,
+          used: 0,
+        },
+      });
 
       // 5) Construir URL de verificación
       const baseUrl =
@@ -114,8 +103,8 @@ export const POST: APIRoute = async ({ request }) => {
         { status: 201, headers: { 'Content-Type': 'application/json' } }
       );
     } catch (err: any) {
-      // PostgreSQL usa código 23505 para violación de constraint único
-      if (err.code === 'ER_DUP_ENTRY' || err.code === '23505') {
+      // Prisma lanza P2002 para violación de constraint único
+      if (err.code === 'P2002') {
         return new Response(
           JSON.stringify({ message: 'El correo ya está registrado.' }),
           { status: 409, headers: { 'Content-Type': 'application/json' } }
