@@ -37,6 +37,9 @@ export const POST: APIRoute = async ({ request }) => {
     const passwordHash = await bcrypt.hash(password, 10);
 
     try {
+      // Verificar conexión y que las tablas existan
+      await prisma.$connect();
+      
       // 1) Insertar cliente como INACTIVO (activo = 0) usando Prisma
       const cliente = await prisma.cliente.create({
         data: {
