@@ -25,7 +25,7 @@ function getDatabaseUrl(): string | undefined {
   return undefined;
 }
 
-// Configurar DATABASE_URL en process.env si no existe (Prisma lo lee de ahí)
+// Configurar DATABASE_URL
 const databaseUrl = getDatabaseUrl();
 if (databaseUrl && !process.env.DATABASE_URL) {
   process.env.DATABASE_URL = databaseUrl;
@@ -36,11 +36,35 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+// Configuración de Prisma Client para Prisma 7
+const prismaConfig: any = {
+  log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+};
+
+// Prisma 7 requiere adapter o accelerateUrl
+if (databaseUrl) {
+  // Si es una URL de Prisma Accelerate, usar accelerateUrl
+  if (databaseUrl.startsWith('prisma+')) {
+    prismaConfig.accelerateUrl = databaseUrl;
+  } else {
+    // Si no, usar adapter con la URL
+    prismaConfig.adapter = {
+      url: databaseUrl,
+    };
+  }
+} else if (process.env.DATABASE_URL) {
+  // Si DATABASE_URL está en process.env, usar adapter
+  if (process.env.DATABASE_URL.startsWith('prisma+')) {
+    prismaConfig.accelerateUrl = process.env.DATABASE_URL;
+  } else {
+    prismaConfig.adapter = {
+      url: process.env.DATABASE_URL,
+    };
+  }
+}
+
 export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-  });
+  globalForPrisma.prisma ?? new PrismaClient(prismaConfig);
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
