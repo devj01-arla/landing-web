@@ -94,11 +94,14 @@ export const POST: APIRoute = async ({ request }) => {
     // 3) Generar nuevo token
     const token = crypto.randomBytes(32).toString('hex');
 
-    // 4) Guardar token (expira en 24 horas; si lo tienes en .env, cámbialo aquí)
+    // 4) Guardar token (expira en 24 horas)
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 24);
+    
     await query(
       `INSERT INTO tbl_email_verification_tokens (cliente_id, token, expires_at)
-       VALUES (?, ?, NOW() + INTERVAL '24 hours')`,
-      [cliente.id, token]
+       VALUES (?, ?, ?)`,
+      [cliente.id, token, expiresAt]
     );
 
     // 5) Construir URL de verificación

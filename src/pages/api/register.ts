@@ -39,10 +39,11 @@ export const POST: APIRoute = async ({ request }) => {
 
     try {
       // 1) Insertar cliente como INACTIVO (activo = 0)
+      const now = new Date();
       await query(
         `INSERT INTO tbl_clientes (empresa, correo, password, activo, fecha_registro, fecha_modificacion)
-         VALUES (?, ?, ?, 0, NOW(), NOW())`,
-        [companyName, email, passwordHash]
+         VALUES (?, ?, ?, ?, ?, ?)`,
+        [companyName, email, passwordHash, 0, now, now]
       );
 
       // 2) Obtener el id del cliente recién creado
@@ -72,10 +73,14 @@ export const POST: APIRoute = async ({ request }) => {
       const token = crypto.randomBytes(32).toString('hex');
 
       // 4) Guardar token en BD (expira en N horas)
+      // Calcular fecha de expiración en JavaScript para evitar problemas de interpolación
+      const expiresAt = new Date();
+      expiresAt.setHours(expiresAt.getHours() + EMAIL_VERIFICATION_EXPIRES_HOURS);
+      
       await query(
         `INSERT INTO tbl_email_verification_tokens (cliente_id, token, expires_at)
-         VALUES (?, ?, NOW() + INTERVAL '${EMAIL_VERIFICATION_EXPIRES_HOURS} hours')`,
-        [cliente.id, token]
+         VALUES (?, ?, ?)`,
+        [cliente.id, token, expiresAt]
       );
 
       // 5) Construir URL de verificación

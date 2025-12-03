@@ -41,6 +41,12 @@ export async function query<T = any>(
   let paramIndex = 1;
   const convertedSql = sql.replace(/\?/g, () => `$${paramIndex++}`);
   
+  // Debug en desarrollo
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[DB Query]', convertedSql);
+    console.log('[DB Params]', params);
+  }
+  
   const result = await pool.query(convertedSql, params);
   return { rows: result.rows as T[] };
 }
