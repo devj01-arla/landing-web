@@ -25,7 +25,7 @@ function getDatabaseUrl(): string | undefined {
   return undefined;
 }
 
-// Configurar DATABASE_URL
+// Configurar DATABASE_URL en process.env (Prisma lo lee automáticamente)
 const databaseUrl = getDatabaseUrl();
 if (databaseUrl && !process.env.DATABASE_URL) {
   process.env.DATABASE_URL = databaseUrl;
@@ -41,27 +41,13 @@ const prismaConfig: any = {
   log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
 };
 
-// Prisma 7 requiere adapter o accelerateUrl
-if (databaseUrl) {
-  // Si es una URL de Prisma Accelerate, usar accelerateUrl
-  if (databaseUrl.startsWith('prisma+')) {
-    prismaConfig.accelerateUrl = databaseUrl;
-  } else {
-    // Si no, usar adapter con la URL
-    prismaConfig.adapter = {
-      url: databaseUrl,
-    };
-  }
-} else if (process.env.DATABASE_URL) {
-  // Si DATABASE_URL está en process.env, usar adapter
-  if (process.env.DATABASE_URL.startsWith('prisma+')) {
-    prismaConfig.accelerateUrl = process.env.DATABASE_URL;
-  } else {
-    prismaConfig.adapter = {
-      url: process.env.DATABASE_URL,
-    };
-  }
+// Prisma 7: Solo necesitamos especificar accelerateUrl si es Prisma Accelerate
+// Para PostgreSQL normal, Prisma lee DATABASE_URL automáticamente de process.env
+const finalDatabaseUrl = databaseUrl || process.env.DATABASE_URL;
+if (finalDatabaseUrl && finalDatabaseUrl.startsWith('prisma+')) {
+  prismaConfig.accelerateUrl = finalDatabaseUrl;
 }
+// Si no es Accelerate, no pasamos nada - Prisma usa DATABASE_URL de process.env automáticamente
 
 export const prisma =
   globalForPrisma.prisma ?? new PrismaClient(prismaConfig);
