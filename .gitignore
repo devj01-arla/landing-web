@@ -31,6 +31,7 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+.env*.local
 .env.example
 
 # VS Code
@@ -55,3 +56,11 @@ ehthumbs.db
 # Miscellaneous
 *.bak
 *.tmp
+
+# Prisma
+/generated/prisma
+prisma/migrations/*
+!prisma/migrations/.gitkeep
+prisma/*.db
+prisma/*.db-journal
+.prisma/

@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Cliente {
+  id                 Int       @id @default(autoincrement())
+  empresa            String    @db.VarChar(255)
+  correo             String    @unique @db.VarChar(255)
+  password           String    @db.VarChar(255)
+  activo             Int       @default(0) // 0 = inactivo, 1 = activo
+  fecha_registro     DateTime  @default(now()) @map("fecha_registro")
+  fecha_modificacion DateTime  @updatedAt @map("fecha_modificacion")
+  
+  emailVerificationTokens EmailVerificationToken[]
+  passwordResetTokens     PasswordResetToken[]
+
+  @@map("tbl_clientes")
+}
+
+model EmailVerificationToken {
+  id         Int      @id @default(autoincrement())
+  cliente_id Int      @map("cliente_id")
+  token      String   @db.VarChar(255)
+  expires_at DateTime @map("expires_at")
+  used       Int      @default(0)
+  created_at DateTime  @default(now()) @map("created_at")
+  
+  cliente Cliente @relation(fields: [cliente_id], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([cliente_id])
+  @@map("tbl_email_verification_tokens")
+}
+
+model PasswordResetToken {
+  id         Int      @id @default(autoincrement())
+  cliente_id Int      @map("cliente_id")
+  token      String   @db.VarChar(255)
+  expires_at DateTime @map("expires_at")
+  used       Int      @default(0)
+  created_at DateTime  @default(now()) @map("created_at")
+  
+  cliente Cliente @relation(fields: [cliente_id], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([cliente_id])
+  @@map("tbl_password_reset_tokens")
+}
