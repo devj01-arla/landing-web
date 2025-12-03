@@ -205,14 +205,22 @@ const origin = url.searchParams.get('origin') ?? ''; // 'register' | 'login' | '
         const data = await res.json().catch(() => null);
 
         if (!res.ok) {
-          showNotification('error', data?.message || 'No se pudo reenviar el correo.');
+          // Si hay cooldown, mostrar el tiempo restante
+          if (res.status === 429 && data?.cooldownSeconds) {
+            showNotification('error', data?.message || 'No se pudo reenviar el correo.');
+            startCooldown(data.cooldownSeconds);
+          } else {
+            showNotification('error', data?.message || 'No se pudo reenviar el correo.');
+          }
         } else {
           showNotification(
             'success',
             data?.message || 'Hemos reenviado el correo de verificación.'
           );
-          // Cooldown de 60 segundos
-          startCooldown(60);
+          // Usar el cooldown que viene del servidor
+          if (data?.cooldownSeconds) {
+            startCooldown(data.cooldownSeconds);
+          }
         }
       } catch (err) {
         console.error(err);

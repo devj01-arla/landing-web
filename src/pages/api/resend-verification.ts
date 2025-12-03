@@ -6,6 +6,13 @@ import crypto from 'crypto';
 import { sendVerificationEmail } from '../../lib/email';
 import type { ClienteRow } from '../../types/cliente';
 
+// Tiempo de cooldown en segundos (configurable desde variable de entorno)
+const EMAIL_VERIFICATION_RESEND_SECONDS = Number(
+  import.meta.env.EMAIL_VERIFICATION_RESEND_SECONDS ??
+    process.env.EMAIL_VERIFICATION_RESEND_SECONDS ??
+    300 // Default: 5 minutos (300 segundos)
+);
+
 interface VerificationTokenRow {
   id: number;
   cliente_id: number;
@@ -64,7 +71,7 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // 2) Chequear si ya se envió hace poco (rate limit, p.ej. 5 min)
+    // 2) Chequear si ya se envió hace poco (rate limit configurable)
     const lastTokenResult = await query<VerificationTokenRow>(
       `SELECT id, cliente_id, token, created_at
        FROM tbl_email_verification_tokens
@@ -78,13 +85,15 @@ export const POST: APIRoute = async ({ request }) => {
       const lastCreatedAt = new Date(lastTokenResult.rows[0].created_at);
       const now = new Date();
       const diffMs = now.getTime() - lastCreatedAt.getTime();
-      const diffMinutes = diffMs / (1000 * 60);
+      const diffSeconds = Math.floor(diffMs / 1000);
 
-      if (diffMinutes < 5) {
+      if (diffSeconds < EMAIL_VERIFICATION_RESEND_SECONDS) {
+        const remainingSeconds = EMAIL_VERIFICATION_RESEND_SECONDS - diffSeconds;
         return new Response(
           JSON.stringify({
             message:
-              'Ya hemos enviado un correo hace poco. Por favor, espera unos minutos antes de solicitar otro.',
+              'Ya hemos enviado un correo hace poco. Por favor, espera antes de solicitar otro.',
+            cooldownSeconds: remainingSeconds,
           }),
           { status: 429, headers: { 'Content-Type': 'application/json' } }
         );
@@ -123,6 +132,7 @@ export const POST: APIRoute = async ({ request }) => {
       JSON.stringify({
         message:
           'Hemos reenviado el correo de verificación. Revisa tu bandeja de entrada y carpeta de spam.',
+        cooldownSeconds: EMAIL_VERIFICATION_RESEND_SECONDS,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
